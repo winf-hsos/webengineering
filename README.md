@@ -1,2 +1,2 @@
-# webengineering
-Code for the course "Web Engineering and E-Commerce"
+# Repository for Web Engineering and E-Commerce
+This repository contains all example code for the class. The subfolders are organized by week.
