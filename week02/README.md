@@ -44,9 +44,20 @@ If we consider the child-elements of the `<head>`- and `<body>`-elements, we get
                             |
                          ┌──┴──┐
                         <li>  <li>
-            
 ```
 
 There are elements that only have an opening-tag, for example the `<img>`-tag to display images in an HTML document. These elements can't have other elements as children; they are therefore leafs of the tree.
+
+The table sums up the HTMl tags we have learned about so far.
+
+| Tag | Description |
+| --- | --- |
+| `<html>` | Root element for every HTML document |
+| `<head>` | Contains meta data, style information (CSS), links and other things that are part of the document itself |
+| `<body>` | Contains the visible content of the HTML document |
+| `<h1>` | Defines a heading of the highest level |
+| `<p>` | Defines a paragraph of text |
+| `<ul>` | Introduces an unordered list |
+| `<li>` | Defines one item in a list (unordered or ordered) |
 
 # `01_html_with_first_css.html`
