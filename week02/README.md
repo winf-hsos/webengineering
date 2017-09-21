@@ -1,14 +1,13 @@
 # Week 2
 
-## `00_html_scaffold.html`
+## The HTML Structure (`00_html_scaffold.html`)
 This file demonstrates the simple structure of an HTML document. Within the `<body>`- tags, 
-you also find the first important HTML-tags:
+you also find some important HTML-tags:
 
 - `<h1>` - Is short for *heading of level 1*
 - `<p>` - Defines a paragraph of text
 - `<ul>`- Is short for *unordered list* and defines the start of a such
 - `<li>`- Is short for *list item*
-
 
 The first line `<!DOCTYPE html>` is mandatory and tells the browser that this is an HTML document and must be handled as such.
 
@@ -48,16 +47,20 @@ If we consider the child-elements of the `<head>`- and `<body>`-elements, we get
 
 There are elements that only have an opening-tag, for example the `<img>`-tag to display images in an HTML document. These elements can't have other elements as children; they are therefore leafs of the tree.
 
-The table sums up the HTMl tags we have learned about so far.
+The table sums up the HTML tags we have learned about so far.
 
 | Tag | Description |
 | --- | --- |
 | `<html>` | Root element for every HTML document |
 | `<head>` | Contains meta data, style information (CSS), links and other things that are part of the document itself |
+| `<meta>` | Defines a meta datum for the document |
+| `<title>` | Sets the title that is shown in the top bar of the browser |
 | `<body>` | Contains the visible content of the HTML document |
 | `<h1>` | Defines a heading of the highest level |
 | `<p>` | Defines a paragraph of text |
 | `<ul>` | Introduces an unordered list |
 | `<li>` | Defines one item in a list (unordered or ordered) |
 
-# `01_html_with_first_css.html`
+# First Steps with CSS (`01_html_with_first_css.html`)
+
+The HTML above shows in a browser, but the style of it can be improved. Fortunately, we have a great way to style HTML-elements: CSS (Cascading Style Sheets).
