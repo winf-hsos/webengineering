@@ -1,4 +1,4 @@
-**Table of Contents**
+# Table of Contents
 - [The HTML Structure (`00_html_scaffold.html`)](#the-html-structure-00_html_scaffoldhtml)
   - [The Document is A Tree](#the-document-is-a-tree)
   - [First HTML Tags](#first-html-tags)
