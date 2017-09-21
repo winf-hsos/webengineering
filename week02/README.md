@@ -24,7 +24,7 @@ The stem of an HTML tree is called **root element**. This is always the `<html>`
 
 The above is a fairly small tree. To make things more interesting, each of the two subtrees can have children of its own, and they can again have children, and so forth. There is no limit to the depth of the tree. 
 
-In the example in [`00_html_scaffold.html`](https://github.com/winf-hsos/webengineering/blob/master/week02/00_html_scaffold.html), the full tree looks like this (actually it is drawn upside down, but that is how we usually do it in IT):
+In the example in [`00_html_scaffold.html`](https://github.com/winf-hsos/webengineering/blob/master/week02/00_html_scaffold.html), the full tree looks like this (actually it is drawn upside down, but that is how we usually do it in IT for better readability):
 
 ```
               <html>
@@ -45,31 +45,30 @@ As you can see, the `<head>` tag has two children, `<meta>` and `<title>`. They 
 So what is the visible part in this case? Well, within the `<body>` tags, we find the following:
 
 - An `<h1>` tag, which is short for a *heading of level 1*
-- A `<p>` tag, which declares a paragraph of text
+- A `<p>` tag, which declares a *paragraph* of text
 - An `<ul>` tag, which is short for *unordered list* and defines the start of such
-- Two `<li>` tags, which each denote a list item of the unordered list
+- Two `<li>` tags, which each denote a *list item* of the unordered list
 
 
-It is important to note that there are elements that only have an opening-tag. For example, the `<img>`-tag to display images in a document. Such elements can't have other elements as children; they are therefore leafs of the tree.
+It is important to note that there are elements that only have an opening-tag. For example, the `<img>` tag to display images in a document. Such elements can't have other elements as children; they are therefore leafs of the tree.
 
-It is important that you understand the basic structure of an HTML document, as it is going to be with us during the rest of the semester.
+It is crucial that you understand the basic structure of an HTML document, as it is going to be with us during the rest of the semester.
 
 ### Summary
 
 The key takeaways are:
 
 - An HTML document is a tree
-- HTLM tags are the node of the tree, and everything inbetween a pair of tags is a subtree
+- HTML tags are the nodes of the tree, and everything inbetween a pair of tags is a subtree
 - Meta information goes in the `<head>` element, while visible stuff lives in the `<body>` element
-
 
 The table sums up the HTML tags we have learned about so far.
 
 | Tag | Description |
 | --- | --- |
 | `<html>` | Root element for every HTML document |
-| `<head>` | Contains meta data, style information (CSS), links and other things that are part of the document itself |
-| `<meta>` | Defines a meta datum for the document |
+| `<head>` | Contains mostly meta data and style information (CSS) |
+| `<meta>` | Defines a meta datum for the document (e.g. title, keywords, description) |
 | `<title>` | Sets the title that is shown in the top bar of the browser |
 | `<body>` | Contains the visible content of the HTML document |
 | `<h1>` | Defines a heading of the highest level |
@@ -79,5 +78,9 @@ The table sums up the HTML tags we have learned about so far.
 
 # First Steps with CSS (`01_html_with_first_css.html`)
 
-The HTML above shows in a browser, but the style of it can be improved. Fortunately, we have a great way to style HTML-elements: CSS (Cascading Style Sheets).
+The following explanation references the source file [`00_html_scaffold.html`](https://github.com/winf-hsos/webengineering/blob/master/week02/01_html_with_first_css.html).
+
+## HTML sets the structure, CSS the design
+
+The HTML above shows in a browser, but the style of it can be improved. Fortunately, we have a great way to style HTML elements: **Cascading Style Sheets** or short **CSS**.
 
