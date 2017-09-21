@@ -2,6 +2,8 @@
 
 ## The HTML Structure (`00_html_scaffold.html`)
 
+The following explanation references the source file [`00_html_scaffold.html`](https://github.com/winf-hsos/webengineering/blob/master/week02/00_html_scaffold.html).
+
 ### The Document is A Tree
 This file demonstrates the structure of an HTML document. An HTML document has a **hierachical structure**, that means we can draw it as a tree, as shown below. 
 
