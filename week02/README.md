@@ -1,10 +1,8 @@
-# Week 2
-
-## The HTML Structure (`00_html_scaffold.html`)
+# The HTML Structure (`00_html_scaffold.html`)
 
 The following explanation references the source file [`00_html_scaffold.html`](https://github.com/winf-hsos/webengineering/blob/master/week02/00_html_scaffold.html).
 
-### The Document is A Tree
+## The Document is A Tree
 This file demonstrates the structure of an HTML document. An HTML document has a **hierachical structure**, that means we can draw it as a tree, as shown below. 
 
 The nodes of the HTML tree are called HTML **elements**, or simply elements. Elements are denoted with HTML **tags**. An HTML tag is enclosed by the symbols `<` and `>`, with the name of the tag written inbetween. 
@@ -20,7 +18,7 @@ The stem of an HTML tree is called **root element**. This is always the `<html>`
         |         |
       <head>     <body>
 ```
-### First HTML Tags
+## First HTML Tags
 
 The above is a fairly small tree. To make things more interesting, each of the two subtrees can have children of its own, and they can again have children, and so forth. There is no limit to the depth of the tree. 
 
@@ -54,7 +52,7 @@ It is important to note that there are elements that only have an opening-tag. F
 
 It is crucial that you understand the basic structure of an HTML document, as it is going to be with us during the rest of the semester.
 
-### Summary
+## Summary
 
 The key takeaways are:
 
