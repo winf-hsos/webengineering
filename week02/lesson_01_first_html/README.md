@@ -88,7 +88,7 @@ The key takeaways are:
 - HTML tags are the nodes of the tree, and everything inbetween a pair of tags is a subtree
 - Meta information goes in the `<head>` element, while visible stuff lives in the `<body>` element
 
-The table sums up the HTML tags we have learned about so far.
+The table sums up the HTML tags we have learned about so far. We'll come back to them in the following lessons.
 
 | Tag | Description |
 | --- | --- |
@@ -104,4 +104,4 @@ The table sums up the HTML tags we have learned about so far.
 
 # Remarks
 
-**NOTE 1:**: The first line `<!DOCTYPE html>` tell the browser that this is an HTML document and that it should be display accordingly.
+**NOTE 1:** The first line `<!DOCTYPE html>` tell the browser that this is an HTML document and that it should be display accordingly.
