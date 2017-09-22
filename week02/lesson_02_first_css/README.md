@@ -9,7 +9,7 @@
 
 # First Steps with CSS
 
-The following explanations reference the source file [`01_html_with_first_css.html`]https://github.com/winf-hsos/webengineering/blob/master/week02/lesson_02_first_css/01_html_with_first_css.html).
+The following explanations reference the source file [`01_html_with_first_css.html`](https://github.com/winf-hsos/webengineering/blob/master/week02/lesson_02_first_css/01_html_with_first_css.html).
 
 ```html
 <!DOCTYPE html>
