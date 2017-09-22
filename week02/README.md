@@ -12,6 +12,27 @@
 
 The following explanation references the source file [`00_html_scaffold.html`](https://github.com/winf-hsos/webengineering/blob/master/week02/00_html_scaffold.html).
 
+```html
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Haster Bier Online-Shop</title>
+</head>
+
+<body>
+    <h1>Willkommen in unserem Online-Shop</h1>
+    <p>Bestellen Sie unsere Haster Biere bequem online:</p>
+    <ul>
+        <li>Haster Helles</li>
+        <li>Haster Dunkles</li>
+    </ul>
+</body>
+
+</html>
+```
+
 ## The Document is A Tree
 This file demonstrates the structure of an HTML document. An HTML document has a **hierachical structure**, that means we can draw it as a tree, as shown below. 
 
