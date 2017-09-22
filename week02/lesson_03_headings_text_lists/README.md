@@ -50,7 +50,7 @@ The following explanations reference the source file [`01_headings_text_lists.ht
 
 ## Headings
 
-Headings help structure your text and website. It is very similar to how you would structure a word document: The title of a chapter could be the highest level, and for subsections you can use lower level headings. This approach is also used in websites, for which there are six different headings:
+Headings help structure your text and website, similar to how you  structure a word document: The title of a chapter could be the highest level, and for subsections you can use lower level headings. This approach is also used in websites, for which HTML povides six different headings:
 
 ```html
 <h1>Top Level Heading</h1>
@@ -61,7 +61,7 @@ Headings help structure your text and website. It is very similar to how you wou
 <h6>Level 6 Heading</h6>
 ```
 
-Per default, each of the headings has a certain standard appearance in a browser: The higher the level, the smaller the font size. Howevery, we can modify this appearance using CSS, so to change the font size of a level 2 heading, we could write this CSS rule:
+Per default, each of the headings has a certain standard appearance in a browser: The higher the level, the smaller the font size. However, we can modify this appearance using CSS, so to change the font size of a level 2 heading, we could write this CSS rule:
 
 ```css
 h2 {
@@ -88,9 +88,10 @@ A HTML paragraph per default is a so called *block element*, meaning it will be 
 <p>First Line</p><p>This is displayed in a separate line</p>
 ```
 
-
+As with any HTML element, you can apply CSS styles to change the default appearance.
 
 ## Unordered and Ordered Lists
+
 
 # Links
 
