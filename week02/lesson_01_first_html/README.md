@@ -3,6 +3,7 @@
   * [The Document is A Tree](#the-document-is-a-tree)
   * [First HTML Tags](#first-html-tags)
   * [Summary](#summary)
+  * [Remarks](#remarks)
 
 # The HTML Structure
 
@@ -100,3 +101,7 @@ The table sums up the HTML tags we have learned about so far.
 | `<p>` | Defines a paragraph of text |
 | `<ul>` | Introduces an unordered list |
 | `<li>` | Defines one item in a list (unordered or ordered) |
+
+# Remarks
+
+**NOTE 1:**: The first line `<!DOCTYPE html>` tell the browser that this is an HTML document and that it should be display accordingly.
