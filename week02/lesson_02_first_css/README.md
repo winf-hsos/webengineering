@@ -1,8 +1,11 @@
 # Table of Contents
-- [First Steps with CSS (`01_html_with_first_css.html`)](#first-steps-with-css-01_html_with_first_csshtml)
-  - [HTML sets the structure, CSS the design](#html-sets-the-structure-css-the-design)
-  - [Colors](#colors)
-  - [CSS Selectors](#css-selectors)
+- [First Steps with CSS](#first-steps-with-css)
+  * [HTML sets the structure, CSS the design](#html-sets-the-structure--css-the-design)
+  * [CSS Declaration](#css-declaration)
+  * [Structure of a CSS Rule](#structure-of-a-css-rule)
+    + [CSS Selectors](#css-selectors)
+    + [CSS Properties](#css-properties)
+  * [Summary](#summary)
 
 # First Steps with CSS
 
