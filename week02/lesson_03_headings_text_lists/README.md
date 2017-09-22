@@ -85,7 +85,7 @@ Text is probably the most important content on any website. While you can put te
 A HTML paragraph per default is a so called *block element*, meaning it will be displayed in its own line. So if you have two `<p>` elements in one line in your source code, the result will be two lines with a small space inbetween.
 
 ```html
-<p>First Line</p><p>This is displayed in a separate line</p>
+<p>Kostenlose Lieferung!</p><p>Wir freuen uns auf Sie!</p>
 ```
 
 As with any HTML element, you can apply CSS styles to change the default appearance.
