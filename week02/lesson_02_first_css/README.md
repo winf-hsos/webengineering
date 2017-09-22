@@ -50,6 +50,17 @@ The HTML from [lesson 01](https://github.com/winf-hsos/webengineering/tree/maste
 
 We have learned before that, within the `<body>` tag, you can describe *what* you want to display on the website and how the general structure of the different elements should be. With CSS, you can describe for each element *how* it should be displayed in the browser.
 
+## CSS Declaration
+
+There are two ways to declare CSS:
+
+1. Put it in the `<head>` of the HTML document, using the `<style>` tag
+2. Reference it from a separate file using the `<link>` tag
+
+For now, we'll go with the first option, as seen in the code example above.
+
+## Structure of a CSS Rule
+
 CSS works very simple: We define a scope for our style using a **CSS selector**, and then we use **CSS properties** to describe how everything within that scope should look like. The general structure for a CSS rule looks like this:
 
 ```css
@@ -62,7 +73,7 @@ css-selector {
 
 Let's look at this a bit closer.
 
-## CSS Selectors
+### CSS Selectors
 
 CSS selectors allow to define a scope, i.e. the set of elements to which a certain style should be applied. There are different types of CSS selectors, let's start with the easiest and most inutuitive one: Calling the elements by their names:
 
@@ -105,7 +116,7 @@ h3 {
 }
 ```
 
-As mentioned, naming the HTML element we want to style is the simplest way. But it is only one of many. There are other ways to define a scope, such as:
+As mentioned, directly naming the HTML element we want to style is the simplest way. But it is only one of many. Other ways to define a scope are:
 
 - Using CSS classes
 - Using ID attributes
@@ -113,9 +124,9 @@ As mentioned, naming the HTML element we want to style is the simplest way. But 
 
 We'll skip them for now, but we'll come back to them later. First we need to understand the second part of a CSS rule, the CSS properties.
 
-## CSS Properties
+### CSS Properties
 
-With CSS selectors we define the set of elements we want to style. With CSS properties, we actually describe their style. A property has a name and a value, and both are separated by a colon. 
+With CSS selectors, we define the set of elements we want to style. With CSS properties, we actually describe their style. A CSS property has a name and a value, and both are separated by a colon. 
 
 With the `color:` property from the example above, we have already introduced the first and a very important CSS property. It sets the color of an HTML element's text content. We can therefore apply the `color:` property to any HTML element that contains text, for example:
 
@@ -153,3 +164,4 @@ What we have learned in this lesson:
 - A CSS selector defines the scope for a style, that is a set of elements to apply the style to
 - A CSS selector can use HTML elements to define the scope. Other options are CSS classes, ID attributes oder a combination
 - Depending on the HTML element, certain CSS properties can be applied or not. The `color:` property, for example, only applies to HTML elements with text
+- We can either directly write CSS using the `<style>` tag, or we can reference an external file
