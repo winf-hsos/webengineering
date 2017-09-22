@@ -4,9 +4,9 @@
   - [First HTML Tags](#first-html-tags)
   - [Summary](#summary)
 
-# The HTML Structure (`00_html_scaffold.html`)
+# The HTML Structure
 
-The following explanation references the source file [`00_html_scaffold.html`](https://github.com/winf-hsos/webengineering/blob/master/week02/00_html_scaffold.html).
+The following explanations reference the source file [`00_html_scaffold.html`](https://github.com/winf-hsos/webengineering/blob/master/week02/00_html_scaffold.html).
 
 ```html
 <!DOCTYPE html>
