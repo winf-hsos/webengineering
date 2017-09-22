@@ -1,12 +1,12 @@
 # Table of Contents
-- [The HTML Structure (`00_html_scaffold.html`)](#the-html-structure-00_html_scaffoldhtml)
-  - [The Document is A Tree](#the-document-is-a-tree)
-  - [First HTML Tags](#first-html-tags)
-  - [Summary](#summary)
+- [The HTML Structure](#the-html-structure)
+  * [The Document is A Tree](#the-document-is-a-tree)
+  * [First HTML Tags](#first-html-tags)
+  * [Summary](#summary)
 
 # The HTML Structure
 
-The following explanations reference the source file [`00_html_scaffold.html`](https://github.com/winf-hsos/webengineering/blob/master/week02/00_html_scaffold.html).
+The following explanations reference the source file [`00_html_scaffold.html`](https://github.com/winf-hsos/webengineering/blob/master/week02/lesson_01_first_html/01_html_scaffold.html).
 
 ```html
 <!DOCTYPE html>
