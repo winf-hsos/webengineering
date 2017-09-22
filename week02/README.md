@@ -98,7 +98,7 @@ Within the `<body>` tag, you can describe *what* you want to display on the webs
 
 An important aspect of every design is the choice of colors. By default, the browser shows text and headings in black on a white background. We can change that with CSS.
 
-```
+```html
 h1 {
     color: #009EE3;
 }
