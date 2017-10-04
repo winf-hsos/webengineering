@@ -92,7 +92,7 @@ As with any HTML element, you can apply CSS styles to change the default appeara
 
 ## Unordered and Ordered Lists
 
-To create a bullet point list, which is unordered, simply use the `<ul>` tag. For ordered and therefore numbered lists, use the `<ol>` tag. To create an item within a list, use the `<li>`tag. The example below illustrates that.
+To create a bullet point list, which is unordered, simply use the `<ul>` tag. For ordered and therefore numbered lists, use the `<ol>` tag. To create an item within a list, use the `<li>` tag. The example below illustrates that.
 
 ```html
 <!-- An unordered list -->
