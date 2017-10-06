@@ -1,3 +1,10 @@
+# Table of Contents
+- [HTML elements for headings, text and lists](#html-elements-for-headings--text-and-lists)
+  * [Headings](#headings)
+  * [Text](#text)
+  * [Unordered and Ordered Lists](#unordered-and-ordered-lists)
+- [Links](#links)
+
 # HTML elements for headings, text and lists
 
 The following explanations reference the source file [`01_headings_text_lists.html`](https://github.com/winf-hsos/webengineering/blob/master/week02/lesson_03_headings_text_lists/01_headings_text_lists.html).
