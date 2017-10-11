@@ -1,0 +1,13 @@
+:root {
+    
+    /* Defining variables for colors like that  */
+    /* makes changing them later onmuch easier. */
+    /* You only have to do it in one place      */
+    
+    --light-blue: #B0D1CA;
+    --very-light-blue: #EDF1DE;
+    --dark-brown: #B47E47;
+    --light-brown: #E1A566;
+    --brown-green: #857333;
+    --dark-grey: #404040;
+}
