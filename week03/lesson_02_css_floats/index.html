@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Two Columns with CSS Floats</title>
+
+    <style>
+        .column-left {
+            width: 48%;
+            float: left;
+        }
+
+        .column-right {
+            width: 48%;
+            float: right;
+        }
+
+        .clearing {
+            clear: both;
+        }
+    </style>
+
+</head>
+
+<body>
+    <h1>Two Column Layout with Floats</h1>
+
+    <div class="column-left">
+        <h2>First column</h2>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla luctus aliquam dolor, eu lacinia lorem placerat vulputate.</p>
+    </div>
+
+    <div class="column-right">
+        <h2>Second column</h2>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla luctus aliquam dolor, eu lacinia lorem placerat vulputate.</p>
+    </div>
+
+    <hr class="clearing">
+    <div>This is no longer part of any floating.</div>
+
+</body>
+
+</html>
