@@ -1,0 +1,18 @@
+{
+    "welcome": "Willkommen im Haster Bier Shop",
+    "products": [{
+            "description": "Nach original Osnabrücker Rezept gebraut. Enthält 4,9% Alkohol.",
+            "name": "Osnabrücker Pils 0,33",
+            "preis": "11,99 €"
+        }, {
+            "description": "Das bayrische Original nach Mönchstradition. Ideal für den Biergarten.",
+            "name": "Franziskaner Weizenbier 0,5",
+            "preis": "14,99 € zzgl. Pfand"
+        },
+        {
+            "description": "Das Bier des FC Schalke 04.",
+            "name": "Veltins Pils 0,3",
+            "preis": "12,49 €"
+        }
+    ]
+}
