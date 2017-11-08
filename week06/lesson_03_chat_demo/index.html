@@ -39,7 +39,7 @@
 <body>
 
     <div class="container">
-        
+
         <!-- This div is hidden once a username was entered -->
         <div class="row align-items-center" id="entername">
             <div class="col-sm-3"></div>
@@ -50,7 +50,7 @@
                     <label for="inputUserName">Enter your name</label>
                     <input type="text" class="form-control" id="inputUserName" placeholder="Enter your name">
                 </div>
-                
+
                 <!-- When this button is clicked, call the function setUser() -->
                 <button onclick="setUser()" class="btn btn-primary">Go to Chat</button>
             </div>
@@ -63,17 +63,17 @@
             <div class="form-group col-md-12">
                 <label for="chatMessage">Message</label>
                 <input type="text" class="form-control" id="chatMessage" placeholder="Your Message">
-                
+
                 <!-- When this button is clicked, call the function send() -->
                 <button onclick="send()" class="btn btn-primary">Send</button>
             </div>
 
             <div class="col-12" id="chatMessages">
-            
+
                 <!-- The chat lines are added dynamically here -->
 
             </div>
-            
+
         </div>
     </div>
 
@@ -95,26 +95,26 @@
         };
 
         firebase.initializeApp(config);
-        
-        
+
+
         /* Get a reference to the real-time database, 
          * specifically to the 'chat' node */
         var chatRef = firebase.database().ref('chat').orderByChild("time").limitToLast(20);
-        
+
         /* Tell Firebase we want to get notified
          * about changes to the chat node in the databse */
-        chatRef.on('value', function(snapshot) {
-            updateChat(snapshot.val());
-        });
+        chatRef.on('value', updateChat);
+
 
         /* This function updates the chat window
          * when a new message comes in. */
         function updateChat(value) {
+            var messages = value.val();
             var chatMessages = document.getElementById('chatMessages');
             chatMessages.innerHTML = "";
 
-            for (var key in value) {
-                var message = value[key];
+            for (var key in messages) {
+                var message = messages[key];
                 var divEl = document.createElement("div");
                 divEl.innerHTML = '<b>' + message.user + ': </b><i>' + message.message + '</i>';
                 chatMessages.appendChild(divEl);

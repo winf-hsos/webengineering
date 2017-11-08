@@ -31,23 +31,21 @@
             apiKey: "AIzaSyBMjgUu-f8i_HB5R6ZzNoUVcUpK57K0UHY",
             databaseURL: "https://web-engineering-project.firebaseio.com"
         };
-        
+
         firebase.initializeApp(config);
 
         // Get a reference to the database's welcome text
         var welcomeRef = firebase.database().ref('welcome');
-        
+
         // Listen for changes to the welcome message
-        welcomeRef.on('value', function(snapshot) {
-            setWelcomeText(snapshot.val());
-        });
+        welcomeRef.on('value', setWelcomeText);
+
 
         /* This function sets the h1 text to whatever is returned
-         * from the database */ 
+         * from the database */
         function setWelcomeText(value) {
-            document.querySelector("h1").textContent = value;
+            document.querySelector("h1").textContent = value.val();
         }
-        
     </script>
 
 </body>
