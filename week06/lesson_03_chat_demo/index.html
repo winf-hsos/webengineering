@@ -26,6 +26,7 @@
             border-style: solid;
             border-width: 1px;
             border-radius: 5px;
+            border-color: #c0c0c0;
         }
 
         #chatMessages {
@@ -38,7 +39,8 @@
 <body>
 
     <div class="container">
-
+        
+        <!-- This div is hidden once a username was entered -->
         <div class="row align-items-center" id="entername">
             <div class="col-sm-3"></div>
             <div class="col align-self-center">
@@ -48,24 +50,30 @@
                     <label for="inputUserName">Enter your name</label>
                     <input type="text" class="form-control" id="inputUserName" placeholder="Enter your name">
                 </div>
+                
+                <!-- When this button is clicked, call the function setUser() -->
                 <button onclick="setUser()" class="btn btn-primary">Go to Chat</button>
             </div>
             <div class="col-sm-3"></div>
         </div>
 
+        <!-- This div is shown when a username was entered -->
         <div class="row" id="chat">
 
             <div class="form-group col-md-12">
-                <label for="inputEmail4">Message</label>
+                <label for="chatMessage">Message</label>
                 <input type="text" class="form-control" id="chatMessage" placeholder="Your Message">
+                
+                <!-- When this button is clicked, call the function send() -->
                 <button onclick="send()" class="btn btn-primary">Send</button>
             </div>
 
             <div class="col-12" id="chatMessages">
+            
+                <!-- The chat lines are added dynamically here -->
 
             </div>
-
-            <!-- The chat lines come here -->
+            
         </div>
     </div>
 
@@ -87,32 +95,42 @@
         };
 
         firebase.initializeApp(config);
-
+        
+        
+        /* Get a reference to the real-time database, 
+         * specifically to the 'chat' node */
         var chatRef = firebase.database().ref('chat').orderByChild("time").limitToLast(20);
+        
+        /* Tell Firebase we want to get notified
+         * about changes to the chat node in the databse */
         chatRef.on('value', function(snapshot) {
             updateChat(snapshot.val());
         });
 
+        /* This function updates the chat window
+         * when a new message comes in. */
         function updateChat(value) {
-            console.dir(value);
             var chatMessages = document.getElementById('chatMessages');
             chatMessages.innerHTML = "";
 
             for (var key in value) {
                 var message = value[key];
                 var divEl = document.createElement("div");
-                divEl.classList += "col-12";
                 divEl.innerHTML = '<b>' + message.user + ': </b><i>' + message.message + '</i>';
                 chatMessages.appendChild(divEl);
             }
         }
 
+        /* This function hides the username dialog and show
+         * the chat windows as soon as a username was entered. */
         function setUser() {
             username = document.getElementById("inputUserName").value;
             document.querySelector('#entername').setAttribute("hidden", "");
             document.querySelector('#chat').removeAttribute("hidden");
         }
 
+        /* This function sends a new chat message when the
+         * send button is pressed */
         function send() {
             var time = new Date().getTime();
 
