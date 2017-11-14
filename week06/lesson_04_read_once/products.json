@@ -1,0 +1,7 @@
+{
+    "products": [
+        { "name": "Krombacher", "price": 12.99 },
+        { "name": "Herforder", "price": 10.99 },
+        { "name": "Veltins", "price": 12.99 }
+    ]
+}

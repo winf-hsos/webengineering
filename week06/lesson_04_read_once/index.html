@@ -12,8 +12,10 @@
 </head>
 
 <body>
-    <!-- Your content goes here -->
-    <h1><!-- Placeholder --></h1>
+
+    <ul>
+        <!-- Dynamic product list -->
+    </ul>
 
 
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
@@ -24,7 +26,6 @@
     <script src="https://www.gstatic.com/firebasejs/4.6.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/4.6.1/firebase-database.js"></script>
     <script>
-     
         var config = {
             apiKey: "AIzaSyBMjgUu-f8i_HB5R6ZzNoUVcUpK57K0UHY",
             databaseURL: "https://web-engineering-project.firebaseio.com"
@@ -33,16 +34,27 @@
         firebase.initializeApp(config);
 
         // Get a reference to the database's welcome text
-        var welcomeRef = firebase.database().ref('welcome');
+        var productListRef = firebase.database().ref('products');
 
         // Listen for changes to the welcome message
-        welcomeRef.on('value', setWelcomeText);
+        productListRef.once('value').then(setProductList);
 
 
-        /* This function sets the h1 text to whatever is returned
-         * from the database */
-        function setWelcomeText(value) {
-            document.querySelector("h1").textContent = value.val();
+        /* Fill the list with products from the database */
+        function setProductList(value) {
+
+            console.log(value);
+            var products = value.val();
+
+            products.forEach(addProductToList);
+        }
+
+        function addProductToList(product) {
+            var list = document.querySelector("ul");
+            var newLi = document.createElement('li');
+            newLi.innerHTML = product.name + " | " + product.price + " €";
+            list.appendChild(newLi);
+
         }
     </script>
 
