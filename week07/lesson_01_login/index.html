@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+</head>
+
+<body>
+
+    <!-- When this is clicked, login() is called -->
+    <button id="btnLogin" onclick="login()" style="margin: 16px;">Login</button>
+
+    <!-- When this is clicked, logout() is called -->
+    <button id="btnLogout" onclick="logout()" style="margin: 16px;" hidden>Logout</button>
+
+
+    <script src="https://www.gstatic.com/firebasejs/4.6.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/4.6.2/firebase-auth.js"></script>
+
+
+    <script>
+        /* global firebase */
+
+        /* Replace with your project's information */
+        var config = {
+            apiKey: "AIzaSyBMjgUu-f8i_HB5R6ZzNoUVcUpK57K0UHY",
+            databaseURL: "https://web-engineering-project.firebaseio.com",
+            authDomain: "web-engineering-project.firebaseapp.com",
+        };
+
+        firebase.initializeApp(config);
+
+        /* This change listener calls the loginChanged() function 
+         * whenever a user logs in or out */
+        firebase.auth().onAuthStateChanged(loginChanged);
+
+
+        /* This function is called when the user clicks
+         * the login button. */
+        function login() {
+            var email = "n.meseth@hs-osnabrueck.de";
+            var password = "test123";
+
+            /* Call the sign in function provided by the Firebase API */
+            firebase.auth().signInWithEmailAndPassword(email, password).catch(handleError);
+        }
+
+        /* This function is called when the user clicke the 
+         * logout button */
+        function logout() {
+            firebase.auth().signOut().catch(handleError);
+        }
+
+
+        /* This is the callback function when the user changed.
+         * Either because a new user logged in, or the current user
+         * signed out. */
+        function loginChanged(user) {
+
+            // If the user variable is set, a user is logged in
+            if (user) {
+
+                // Show the logout button
+                document.getElementById("btnLogout").removeAttribute("hidden");
+                // Hide the login button
+                document.getElementById("btnLogin").setAttribute("hidden", "true");
+
+                var email = user.email;
+                var lastLogin = user.metadata.lastSignInTime;
+
+                console.log("User successfully logged in!");
+                console.log("User email: " + email);
+                console.log("User last signed in: " + lastLogin);
+            }
+
+            // No user logged in
+            else {
+                console.log("User successfully signed out.");
+
+                // Hide the logout button
+                document.getElementById("btnLogout").setAttribute("hidden", "true");
+                // Show the login button
+                document.getElementById("btnLogin").removeAttribute("hidden");
+            }
+        }
+
+        /* This is called if something goes wrong when logging in or logging out.
+         * For example if the user's password is wrong. */
+        function handleError(error) {
+            console.error(error.code + ": " + error.message);
+        }
+    </script>
+
+</body>
+
+</html>
