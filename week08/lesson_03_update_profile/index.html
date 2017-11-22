@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+    
+    <style>
+        #btnLogout {
+            margin-top: 16px;
+        }
+    </style>
+
+</head>
+
+<body>
+    <div class="container">
+
+        <div class="row align-items-center" id="loginForm">
+            <div class="col-sm-3"></div>
+            <div class="col align-self-center">
+                <h3 class="text-center">Login</h3>
+                <hr>
+                <div class="form-group">
+                    <label for="inputEmail">Email address</label>
+                    <input type="email" class="form-control" id="inputEmail" aria-describedby="emailHelp" placeholder="Enter email">
+                    <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+                </div>
+                <div class="form-group">
+                    <label for="inputPassword">Password</label>
+                    <input type="password" class="form-control" id="inputPassword" placeholder="Password">
+                </div>
+
+                <!-- When this is clicked, login() is called -->
+                <button id="btnLogin" onclick="login()" class="btn btn-primary">Login</button>
+
+                <hr>
+            </div>
+            <div class="col-sm-3"></div>
+        </div>
+
+
+        <div class="row align-items-center" id="updateProfileForm" hidden>
+            <div class="col-sm-3"></div>
+            <div class="col align-self-center">
+                <h3 class="text-center">Update Profile</h3>
+                <hr>
+                <div class="form-group">
+                    <label for="inputDisplayName">Display Name</label>
+                    <input type="text" class="form-control" id="inputDisplayName" placeholder="Display Name">
+                </div>
+                <div class="form-group">
+                    <label for="inputPhotoUrl">Photo URL</label>
+                    <input type="text" class="form-control" id="inputPhotoUrl" placeholder="Photo URL">
+                </div>
+
+                <!-- When this is clicked, updateProfile() is called -->
+                <button id="btnUpdateProfile" onclick="updateProfile()" class="btn btn-primary">Update Profile</button>
+
+                <hr>
+
+                <div class="card">
+                    <div class="card-body">
+
+                        <!-- These two will be filled dynamically -->
+                        <h5 class="card-title" id="cardUserDisplayName">N/A</h5>
+                        <img src="default.png" class="img-fluid" id="imgProfilePhoto">
+
+                    </div>
+                </div>
+
+                <!-- When this is clicked, logout() is called -->
+                <button id="btnLogout" onclick="logout()" class="btn btn-primary" hidden>Logout</button>
+
+
+            </div>
+            <div class="col-sm-3"></div>
+        </div>
+
+    </div>
+    <!-- End of container -->
+
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
+
+    <script src="https://www.gstatic.com/firebasejs/4.6.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/4.6.2/firebase-auth.js"></script>
+
+
+    <script>
+        /* global firebase */
+
+        /* Replace with your project's information */
+        var config = {
+            apiKey: "AIzaSyBMjgUu-f8i_HB5R6ZzNoUVcUpK57K0UHY",
+            databaseURL: "https://web-engineering-project.firebaseio.com",
+            authDomain: "web-engineering-project.firebaseapp.com",
+        };
+
+        firebase.initializeApp(config);
+
+        /* This change listener calls the loginChanged() function 
+         * whenever a user logs in or out */
+        firebase.auth().onAuthStateChanged(loginChanged);
+
+
+        /* This function is called when the user clicks
+         * the login button. */
+
+        function login() {
+            // Get the values from the email and password input fields
+            var email = document.getElementById("inputEmail").value;
+            var password = document.getElementById("inputPassword").value;
+
+            /* Call the sign in function provided by the Firebase API 
+             * and pass the email and password */
+            firebase.auth().signInWithEmailAndPassword(email, password).catch(handleError);
+        }
+
+        /* This function is called when the user clicke the 
+         * logout button */
+        function logout() {
+            firebase.auth().signOut().then(function() {
+                console.log("User successfully signed out.");
+            }).catch(handleError);
+        }
+
+
+        /* This is the callback function when the user changed.
+         * Either because a new user logged in, or the current user
+         * signed out. */
+        function loginChanged(user) {
+
+            // If the user variable is set, a user is logged in
+            if (user) {
+
+                // Hide the login form
+                document.getElementById("loginForm").setAttribute("hidden", "");
+
+                // Show the update profile form
+                document.getElementById("updateProfileForm").removeAttribute("hidden");
+
+                // Show the logout button
+                document.getElementById("btnLogout").removeAttribute("hidden");
+
+                // Populate form with profile values
+                document.getElementById("inputDisplayName").value = user.displayName;
+                document.getElementById("inputPhotoUrl").value = user.photoURL;
+                
+                updateFotoAndDisplay();
+
+                console.log("Successfully logged in!");
+
+            }
+            // No user logged in
+            else {
+                // Show the login form
+                document.getElementById("loginForm").removeAttribute("hidden");
+
+                // Hide the update profile form
+                document.getElementById("updateProfileForm").setAttribute("hidden", "");
+
+                // Hide the logout button
+                document.getElementById("btnLogout").setAttribute("hidden", "true");
+            }
+
+        }
+
+        function updateProfile() {
+            var user = firebase.auth().currentUser;
+
+            user.updateProfile({
+                displayName: document.getElementById("inputDisplayName").value,
+                photoURL: document.getElementById("inputPhotoUrl").value
+            }).then(function() {
+                console.log("Profile update was successful!");
+                updateFotoAndDisplay();
+
+            }).catch(handleError);
+
+        }
+
+        /* This function update the profile picture
+         * and the display name on the website */
+        function updateFotoAndDisplay() {
+            var user = firebase.auth().currentUser;
+
+            // Set image and title
+            if (user.displayName)
+                document.getElementById("cardUserDisplayName").innerText = user.displayName;
+
+            if (user.photoURL)
+                document.getElementById("imgProfilePhoto").setAttribute("src", user.photoURL);
+
+        }
+
+
+
+        /* This is called if something goes wrong when logging in or logging out.
+         * For example if the user's password is wrong. */
+        function handleError(error) {
+            console.error(error.code + ": " + error.message);
+        }
+    </script>
+
+</body>
+
+</html>

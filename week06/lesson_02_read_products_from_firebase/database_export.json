@@ -4,6 +4,12 @@
             "description": "Nach original Osnabrücker Rezept gebraut. Enthält 4,9% Alkohol.",
             "name": "Osnabrücker Pils 0,33",
             "preis": "11,99 €"
+            "inhalt" : [
+                {"item" : "Äpfel", "quantity" : "10 Stück"},
+                {"item" : "Orangen", "quantity" : "10 Stück"},
+                {"item" : "Butter", "quantity" : "500 g"},
+                
+                ]
         }, {
             "description": "Das bayrische Original nach Mönchstradition. Ideal für den Biergarten.",
             "name": "Franziskaner Weizenbier 0,5",
