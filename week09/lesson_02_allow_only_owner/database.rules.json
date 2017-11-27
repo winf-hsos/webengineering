@@ -1,0 +1,11 @@
+// Allow only the onwer to read and write a user profile
+{
+  "rules": {
+    "userprofiles": {
+      "$uid": {
+        ".read": "$uid === auth.uid"  
+        ".write": "$uid === auth.uid"
+      }
+    }
+  }
+}
