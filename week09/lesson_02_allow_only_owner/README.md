@@ -38,7 +38,7 @@ Here is why is is extremely useful to store user profiles with the `uid` as its 
 }
 ```
 
-So what does the above rule mean? For the node `userprofiles`, we define a rule for all children named `$uid`. As you might have guessed, `$uid` is a placeholder for a specific value that the app wants to read or write to. It is a placeholder for the `uid` of a specific user at runtime. We won't know who the user is until the rule is exectuted. That is why a placeholder works like magic. 
+So what does the above rule mean? For the node `userprofiles`, we define a rule for all children named `$uid`. As you might have guessed, `$uid` is a placeholder for a specific value that the app wants to read or write to. More precisely, it is a placeholder for the `uid` of a specific user at runtime. We won't know who the user is until the rule is exectuted. That is why a placeholder works like magic. We only define one abstract rule to cover all possible users, and we don't have to create rules for each specific user.
 
 And what about the rule `$uid === auth.uid` we apply here? Well, this simply means that we allow read or write only if the placeholder value (which is a specific `uid` when we validate this rule) equals the `uid` of the currently signed in user. We can check the currently signed in user with the `auth` object, which Firebase gives us access to in validating database rules.
 
