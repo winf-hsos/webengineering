@@ -5,16 +5,16 @@ Consider you have a node named `userprofiles` in your real-time database. Childr
 ```json
 userprofiles: {
 
-    6842c1pSL8OP34Bf812JRq6e7Yh1: {
-        firstname: "Max",
-        lastname: "Mustermann",
-        dateofbirth: "01.01.1990"
+    "6842c1pSL8OP34Bf812JRq6e7Yh1": {
+        "firstname": "Max",
+        "lastname": "Mustermann",
+        "dateofbirth": "01.01.1990"
     },
     
-    DMpMS4IY5wauWoV4gOq6vC8lp4t2: {
-        firstname: "Erika",
-        lastname: "Mustermann",
-        dateofbirth: "24.12.1987"
+    "DMpMS4IY5wauWoV4gOq6vC8lp4t2": {
+        "firstname": "Erika",
+        "lastname": "Mustermann",
+        "dateofbirth": "24.12.1987"
     }
 }
 ```
