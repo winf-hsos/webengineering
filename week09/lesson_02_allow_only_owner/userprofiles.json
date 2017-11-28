@@ -1,7 +1,3 @@
-/* Note that the node key 'userprofiles' is left out because we'll upload this
- * when we are inside this node in the Firebase database.
- */
- 
 {
     "6842c1pSL8OP34Bf812JRq6e7Yh1": {
         "firstname": "Max",
