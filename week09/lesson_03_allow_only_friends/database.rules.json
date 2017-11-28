@@ -1,0 +1,16 @@
+{
+  "rules": {
+    "products": {
+      ".read": true,
+      ".write": false
+    }
+    
+    "userprofiles": {
+
+      "$uid": {
+        ".read": "data.child('friends').child(auth.uid).exists()",
+        ".write": "auth.uid == $uid"
+      }
+    }
+  }
+}
