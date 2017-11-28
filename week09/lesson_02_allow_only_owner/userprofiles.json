@@ -1,0 +1,17 @@
+/* Note that the node key 'userprofiles' is left out because we'll upload this
+ * when we are inside this node in the Firebase database.
+ */
+ 
+{
+    "6842c1pSL8OP34Bf812JRq6e7Yh1": {
+        "firstname": "Max",
+        "lastname": "Mustermann",
+        "dateofbirth": "01.01.1990"
+    },
+    
+    "DMpMS4IY5wauWoV4gOq6vC8lp4t2": {
+        "firstname": "Erika",
+        "lastname": "Mustermann",
+        "dateofbirth": "24.12.1987"
+    }
+}
