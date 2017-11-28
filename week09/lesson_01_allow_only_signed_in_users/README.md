@@ -17,6 +17,66 @@ The way to secure the database is through the definition of security rules. We h
 }
 ```
 
-Remember you can find the current rules when you navigate to real time database in the Firebase console and then click on the rules tab.
+Remember, you can find the current rules when you navigate to real time database in the Firebase console and then click on the rules tab.
 
 ![Where to find the Firebase rules](/media/firebase-database-rules-where-to-find-them.gif)
+
+The rule above introduces two important rule types we can define for any data: `.read` and `.write`. In the example above, we state that both properties are `true`, which implies that anyone can read from and write to our database. This is very unsecure, this exposes all our data to the world. Let's improve upon that.
+
+## Restricting access to signed-in users
+
+In the first step, let's allow only signed-in users to read and write to our database. This is major step of improvement, as we can control who we grant an account and therefore trust with our web app.
+
+Finding out if a user is signed in is straightforward. Firebase gives us access to the currently authentication state via the `auth` variable. If this variable is not null, expressed as `auth != null`, we know that someone is signed in:
+
+```javascript
+{
+  "rules": {
+    ".read": "auth != null",
+    ".write": "auth != null"
+  }
+}
+```
+
+The above set of rules implies that only signed-in users can read from and write to our database. These rules apply to all data in our database, because we defined them on the topmost level. We can control which data is affected by a rule by assigning the rule to the right node in our JSON tree.
+
+## Controling access for specific data nodes
+
+Say we have the following database structure with two nodes:
+
+```javascript
+"root" : {
+    "products" {
+        ...
+    }
+    
+    "userprofiles" : {
+        ...
+    }
+}
+```
+
+In the `products` node, we store products to sell via our webshop. These products and their information should be visible regardless if the user is signed in or not. In the `userprofiles` node, we store sensitive user data, and we only can allow signed-in users to read here. Anyone coming to our website anonymously should never see data from a user profile.
+
+This means we need two different rules: One for the `products` node to allow access to anyone, and another one for the `userprofiles` node to restrict access to signed-in users. We have seen both rules above, now we only need to assign them to the right node:
+
+```javascript
+{
+  "rules": {
+
+    "products": {
+        ".read": true,
+        ".write": true
+    }
+
+    "userprofiles": {
+        ".read": "auth != null",
+        ".write": "auth != null"
+    }        
+  }
+}
+```
+
+As you can see, assigning a rule to a specific node in the JSON tree is as simple as reproducing the structure of our database and putting the rules in the right place.
+
+
