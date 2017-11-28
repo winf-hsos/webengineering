@@ -47,3 +47,9 @@ So what does the above set of rules imply? For the node `userprofiles`, we defin
 And what about the rule's condition `$uid === auth.uid`? Well, this says that we allow read or write only if the placeholder value (which is replaced with a specific `uid` when we validate this rule) equals the `uid` of the currently signed in user. We can check the currently signed in user with the `auth` object, which Firebase gives us access to in validating database rules.
 
 Anytime a user X tries to read the user Y's profile, the database rule will deny this access as defined by the rule. Only if user X tries to read his own profile with the key `X.uid`, the rule will grant the access.
+
+The above in a simple but useful example for a database rule. With Firebase database rules you can do much more than this. Since Firebase offers access not only to the `auth` variable but also to other objects such as the entire database, or the new data that should be written by a write request, there is not much you cannot express with Firebase rules. To learn more, read the official documentation:
+
+- [Understanding Firebase Real Time Database Rules](https://firebase.google.com/docs/database/security/){:target="_blank"}
+- [Get started with Database Rules](https://firebase.google.com/docs/database/security/quickstart){:target="_blank"}
+- [Secure Your Data](https://firebase.google.com/docs/database/security/securing-data){:target="_blank"}
