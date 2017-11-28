@@ -46,7 +46,7 @@ We can now test if our rules works using the simulator in the Firebase console.
 
 If the rules work (and they should), we must update our `database.rules.json` file accordingly:
 
-```
+```javascript
 {
   "rules": {
     "products": {
@@ -65,4 +65,79 @@ If the rules work (and they should), we must update our `database.rules.json` fi
 }
 ```
 
-That's it! We have now successfully implemented a good level of security while not restricting access too much. Try and implement rules to meet your security requirements!
+We have now successfully implemented a good level of security while not restricting access too much. But we said earlier that we want to disclose the first and last name only, not the birthdate. We need one last tweak:
+
+
+```javascript
+{
+  "rules": {
+    "products": {
+      ".read": true,
+      ".write": false
+    }
+    
+    "userprofiles": {
+
+      "$uid": {
+        ".read": "data.child('friends').child(auth.uid).exists()",
+        ".write": "auth.uid == $uid",
+        
+        "dateofbirth": {
+            ".read": "auth.uid == $uid"
+        }
+      }
+    }
+  }
+}
+```
+
+We added a new rule for the child node `dateofbirth` of a user's profile, which states that only the owner may read this property. You can see an important concept of Firebase rules in action here: Rules on a lower level (more specific) overwrite rules on a higher level in the hierarchy. This works great if we only have one or two properties that we want to hide from friends.
+
+If we have more properties, defining a special rule for every field can lead to unreadable and complex rules. In this case, it would be better to split the user profile in two parts, one called `public` and one called `private`, for example. We can then define the access rules for these two nodes only:
+
+```javascript
+"userprofiles": {
+
+    "6842c1pSL8OP34Bf812JRq6e7Yh1": {
+    
+      "public": {
+        "firstname": "Max",
+        "lastname": "Mustermann",
+        "friends" : { ... }
+       },
+       
+      "private": {
+          "dateofbirth": "...",
+          "hobbies:": "..."
+      }
+    }
+}
+```
+
+The rules could then look like this:
+
+```javascript
+{
+  "rules": {
+  
+    "userprofiles": {
+
+      "$uid": {
+        
+        ".write": "auth.uid == $uid",
+      
+        "public" {
+            ".read": "data.child('public').child('friends').child(auth.uid).exists()",
+        },
+        
+        "private": {
+            ".read": "auth.uid == $uid"
+        }
+      }
+
+    }
+  }
+}
+```
+
+That's it! Try and implement rules to meet your security requirements!
