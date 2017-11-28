@@ -22,6 +22,7 @@ Consider you have a node named `userprofiles` in your real-time database. Childr
 ```
 
 <hr></hr>
+
 **Your turn:**
 
 - [ ] Prepare a JSON file for your user profiles. You can use the example above and replace the keys and values.
