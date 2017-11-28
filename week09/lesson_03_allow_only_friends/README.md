@@ -65,6 +65,8 @@ If the rules work (and they should), we must update our `database.rules.json` fi
 }
 ```
 
+## Overwriting security rules on a lower level
+
 We have now successfully implemented a good level of security while not restricting access too much. But we said earlier that we want to disclose the first and last name only, not the birthdate. We need one last tweak:
 
 
