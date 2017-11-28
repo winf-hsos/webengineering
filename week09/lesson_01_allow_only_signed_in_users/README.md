@@ -79,4 +79,8 @@ This means we need two different rules: One for the `products` node to allow acc
 
 As you can see, assigning a rule to a specific node in the JSON tree is as simple as reproducing the structure of our database and putting the rules in the right place.
 
+Watch the video below for a great introduction to Firebase security rules.
+
+[![Securing your data structure with Security Rules](https://img.youtube.com/vi/rtoxRg-kbt0/0.jpg)](https://www.youtube.com/watch?v=rtoxRg-kbt0)
+
 
