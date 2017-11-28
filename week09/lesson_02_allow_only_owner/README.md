@@ -58,4 +58,4 @@ The above in a simple but useful example for a database rule. With Firebase data
 
 The animation below demonstrates how you can use the example file and upload it to your database.
 
-![Import JSON to Firebase database](https://media.giphy.com/media/vFKqnCdLPNOKc/giphy.gif)
+![Import JSON to Firebase database](../../media/Firebase Database Import JSON-min.gif)
