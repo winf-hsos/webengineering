@@ -56,9 +56,11 @@ Say we have the following database structure with two nodes:
 }
 ```
 
-In the `products` node, we store products to sell via our webshop. These products and their information should be visible regardless if the user is signed in or not. In the `userprofiles` node, we store sensitive user data, and we only can allow signed-in users to read here. Anyone coming to our website anonymously should never see data from a user profile.
+In the `products` node, we store products to sell via our webshop. These products and their information should be visible regardless if the user is signed in or not. We don't want anyone to change the products, though. So we forbid any write access.
 
-This means we need two different rules: One for the `products` node to allow access to anyone, and another one for the `userprofiles` node to restrict access to signed-in users. We have seen both rules above, now we only need to assign them to the right node:
+In the `userprofiles` node, we store sensitive user data, and we can only allow signed-in users to read here. Anyone coming to our website anonymously should never see data from a user profile.
+
+This means we need two different rules: One for the `products` node to allow access to anyone, and another one for the `userprofiles` node to restrict access to signed-in users. We have seen both rules we need above, now we need to assign them to the right nodes:
 
 ```javascript
 {
@@ -66,7 +68,7 @@ This means we need two different rules: One for the `products` node to allow acc
 
     "products": {
         ".read": true,
-        ".write": true
+        ".write": false
     }
 
     "userprofiles": {
@@ -77,10 +79,21 @@ This means we need two different rules: One for the `products` node to allow acc
 }
 ```
 
-As you can see, assigning a rule to a specific node in the JSON tree is as simple as reproducing the structure of our database and putting the rules in the right place.
+As you can see, assigning a rule to a specific node in the JSON tree is as simple as reproducing the structure of our database and putting the rules in the right place. That is, the right node.
 
-Watch the video below for a great introduction to Firebase security rules.
+Watch the video below for a great introduction to Firebase security rules (don't worry about the title, no need to know SQL).
 
 [![Securing your data structure with Security Rules](https://img.youtube.com/vi/rtoxRg-kbt0/0.jpg)](https://www.youtube.com/watch?v=rtoxRg-kbt0)
 
+## Deploying database rules
 
+There are two ways to define database rules: 
+
+1. You can write your rules directly in the Firebase console
+2. You can define your rules in your `database.rules.json` file in your workspace. Anytime you deploy with `firebase deploy`, the content of your rules file is deployed to Firebase.
+
+So whenever you define rules directly in the Firebase console, make sure you update your `database.rules.json` file accordingly. Otherwise your rules will be overwritten with the next deployment of your code.
+
+A good process ist to test new rules directly in the Firebase console. The simulator cann help you to test your new rules. When the rules works as expected, update your `database.rules.json` file to contain the new rule.
+
+![The Firebase Rules Simulator](/media/firebase-rules-simulator.gif)

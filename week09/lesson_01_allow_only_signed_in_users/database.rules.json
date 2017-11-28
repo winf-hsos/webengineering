@@ -1,0 +1,14 @@
+{
+  "rules": {
+
+    "products": {
+        ".read": true,
+        ".write": false
+    }
+
+    "userprofiles": {
+        ".read": "auth != null",
+        ".write": "auth != null"
+    }        
+  }
+}
