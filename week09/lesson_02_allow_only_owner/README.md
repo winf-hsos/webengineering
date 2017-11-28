@@ -53,3 +53,9 @@ The above in a simple but useful example for a database rule. With Firebase data
 - [Understanding Firebase Real Time Database Rules](https://firebase.google.com/docs/database/security/)
 - [Get started with Database Rules](https://firebase.google.com/docs/database/security/quickstart)
 - [Secure Your Data](https://firebase.google.com/docs/database/security/securing-data)
+- 
+## Uploading JSON data to your database
+
+The animation below demonstrates how you can use the example file and upload it to your database.
+
+![Import JSON to Firebase database](/media/Firebase Database Import JSON-min.gif)
