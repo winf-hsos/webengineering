@@ -103,7 +103,6 @@
          * whenever a user logs in or out */
         firebase.auth().onAuthStateChanged(loginChanged);
 
-
         /* This function is called when the user clicks
          * the login button. */
 
@@ -124,7 +123,6 @@
                 console.log("User successfully signed out.");
             }).catch(handleError);
         }
-
 
         /* This is the callback function when the user changed.
          * Either because a new user logged in, or the current user
@@ -167,6 +165,7 @@
             populateUserList();
         }
 
+        /* This function read the user profiles and fills the list */
         function populateUserList() {
 
             // Get a reference to the list with all uids
@@ -202,7 +201,6 @@
             })
 
         }
-
 
         /* This is called if something goes wrong when logging in or logging out.
          * For example if the user's password is wrong. */
