@@ -97,3 +97,5 @@ Whenever you define rules directly in the Firebase console, make sure to update 
 A good process ist to test new rules directly in the Firebase console. The simulator helps you test your new rules. When the rules work as expected, update your `database.rules.json` file to reflect the new rule. If you don't update your file, then the rule will be overwritten with the next deployment.
 
 ![The Firebase Rules Simulator](/media/firebase-rules-simulator.gif)
+
+[>> Goto lesson 2 - Make sure only the owner of the data can read it](../lesson_02_allow_only_owner/)
