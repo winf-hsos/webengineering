@@ -92,8 +92,8 @@ There are two ways to define database rules:
 1. You can write your rules directly in the Firebase console
 2. You can define your rules in your `database.rules.json` file in your workspace. Anytime you deploy with `firebase deploy`, the content of your rules file is deployed to Firebase.
 
-So whenever you define rules directly in the Firebase console, make sure you update your `database.rules.json` file accordingly. Otherwise your rules will be overwritten with the next deployment of your code.
+Whenever you define rules directly in the Firebase console, make sure to update your `database.rules.json` file accordingly. Otherwise, your rules will be overwritten with the next deployment of your code.
 
-A good process ist to test new rules directly in the Firebase console. The simulator cann help you to test your new rules. When the rules works as expected, update your `database.rules.json` file to contain the new rule.
+A good process ist to test new rules directly in the Firebase console. The simulator helps you test your new rules. When the rules work as expected, update your `database.rules.json` file to reflect the new rule. If you don't update your file, then the rule will be overwritten with the next deployment.
 
 ![The Firebase Rules Simulator](/media/firebase-rules-simulator.gif)
