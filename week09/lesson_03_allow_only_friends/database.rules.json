@@ -8,7 +8,7 @@
     "userprofiles": {
 
       "$uid": {
-        ".read": "data.child('friends').child(auth.uid).exists()",
+        ".read": "data.child('friends').child(auth.uid).exists() || auth.id = $uid",
         ".write": "auth.uid == $uid"
       }
     }
