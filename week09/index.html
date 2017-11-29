@@ -52,6 +52,25 @@
 
                 <!-- When this is clicked, logout() is called -->
                 <button id="btnLogout" onclick="logout()" style="margin-top: 16px;" class="btn btn-primary" hidden>Logout</button>
+                <hr>
+            </div>
+            <div class="col-sm-3"></div>
+        </div>
+
+        <!-- Display users here -->
+        <div class="row align-items-center">
+            <div class="col-sm-3"></div>
+            <div class="col align-self-center">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">List of Users</h5>
+
+                        <ul id="userList">
+                            <!-- This list is filled dynamically -->
+                        </ul>
+
+                    </div>
+                </div>
             </div>
             <div class="col-sm-3"></div>
         </div>
@@ -66,7 +85,7 @@
 
     <script src="https://www.gstatic.com/firebasejs/4.6.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/4.6.2/firebase-auth.js"></script>
-
+    <script src="https://www.gstatic.com/firebasejs/4.6.2/firebase-database.js"></script>
 
     <script>
         /* global firebase */
@@ -111,7 +130,7 @@
          * Either because a new user logged in, or the current user
          * signed out. */
         function loginChanged(user) {
-            
+
             // If the user variable is set, a user is logged in
             if (user) {
 
@@ -121,7 +140,7 @@
                 // Show the logout button
                 document.getElementById("btnLogout").removeAttribute("hidden");
 
-                console.log("Successfully logged in!");
+                console.log("Successfully logged in user with uid " + user.uid);
 
                 // Get some user data
                 var email = user.email;
@@ -129,6 +148,7 @@
 
                 document.getElementById("welcomeTitle").innerText = "Welcome " + email;
                 document.getElementById("welcomeText").innerHTML = "We are happy you're back.<br> Your last login was <b>" + lastLogin + "</b>";
+
             }
             // No user logged in
             else {
@@ -139,7 +159,47 @@
 
                 document.getElementById("welcomeTitle").innerText = "No User Logged in";
                 document.getElementById("welcomeText").innerText = "Please provide your email and password to login."
+
+                // Clear user list
+                document.getElementById("userList").innerHTML = "";
             }
+
+            populateUserList();
+        }
+
+        function populateUserList() {
+
+            // Get a reference to the list with all uids
+            var uidsRef = firebase.database().ref('uids');
+            var userList = document.getElementById("userList");
+            var uidArray = [];
+
+            // Read the list of uids once
+            uidsRef.once('value', uids => {
+
+                // Save all uids in an array
+                uidArray = Object.keys(uids.val());
+
+                // Go through all uids and try to read the profile
+                uidArray.forEach(uid => {
+
+                    var userRef = firebase.database().ref('userprofiles/' + uid);
+                    userRef.once('value', user => {
+
+                        var userObj = user.val();
+
+                        if (userObj) {
+                            console.log("Access to user profile " + uid + " is allowed.");
+
+                            var userList = document.getElementById("userList");
+                            var liElement = document.createElement("li");
+                            liElement.innerHTML = userObj.firstname + " " + userObj.lastname + " (" + userObj.dateofbirth + ")";
+                            userList.appendChild(liElement);
+                        }
+
+                    }, handleError)
+                })
+            })
 
         }
 

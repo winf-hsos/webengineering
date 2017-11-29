@@ -65,9 +65,41 @@ If the rules work (and they should), we must update our `database.rules.json` fi
 }
 ```
 
+When you test the above scenario, you'll notice that the rule denies access to the owner, if that owner is not listed as a friend of himself (which would be weird). So to allow the owner access to his own profile, we must adjust the rule as follows:
+
+```
+".read" : "data.child('friends').child(auth.uid).exists() || $uid == auth.uid"
+```
+
+The rule now reads:
+
+> If the accessing user is a friend of the accessed user OR if it his own profile...
+
+
 ## Overwriting security rules on a lower level
 
-We have now successfully implemented a good level of security while not restricting access too much. But we said earlier that we want to disclose the first and last name only, not the birthdate. We need one last tweak:
+We have now successfully implemented a good level of security while not restricting access too much. But we said earlier that we want to disclose the first and last name only, not the birthdate. More generally speaking, we want to divide the profile into a public and a private set of properties. The database for that could look as follows:
+
+```javascript
+"userprofiles": {
+
+    "6842c1pSL8OP34Bf812JRq6e7Yh1": {
+    
+      "public": {
+        "firstname": "Max",
+        "lastname": "Mustermann",
+        "friends" : { ... }
+       },
+       
+      "private": {
+          "dateofbirth": "...",
+          "hobbies:": "..."
+      }
+    }
+}
+```
+
+Structuring our database this way allows us to define rules for both part, `public` and `private` separately.
 
 
 ```javascript
@@ -97,7 +129,46 @@ We added a new rule for the child node `dateofbirth` of a user's profile, which 
 
 If we have more properties, defining a special rule for every field can lead to unreadable and complex rules. In this case, it would be better to split the user profile in two parts, one called `public` and one called `private`, for example. We can then define the access rules for these two nodes only:
 
+
 ```javascript
+{
+  "rules": {
+  
+    "userprofiles": {
+
+      "$uid": {
+        ".write": "auth.uid == $uid",
+
+        "public" {
+            ".read": "data.child('public').child('friends').child(auth.uid).exists() || auth.id = $uid",
+        },
+        
+        "private": {
+            ".read": "auth.uid == $uid"
+        }
+      }
+
+    }
+  }
+}
+```
+
+## Listing profiles with read permission
+
+Note that, with rule file above, you cannot access the `userprofiles` node and iterate through all profiles in JavaScript. For example, this would lead to an error, because there is no `.read` rule on the `userprofiles` node that would allow you to read the whole node:
+
+```javascript
+firebase.database().ref('userprofiles').once( ... );
+```
+
+Instead, if you want to list users that the currently signed in user has access to, you could maintain another list in your database where you only store the `uid`s of all users. This list is readable for all signed in users. You can then read the `uid`s from the list and make individual requests for each user profile. The database would then look like this:
+
+```javascript
+"uids": {
+  "6842c1pSL8OP34Bf812JRq6e7Yh1": true,
+  ...
+}
+
 "userprofiles": {
 
     "6842c1pSL8OP34Bf812JRq6e7Yh1": {
@@ -116,29 +187,26 @@ If we have more properties, defining a special rule for every field can lead to 
 }
 ```
 
-The rules could then look like this:
+We can then use the following code to iterate through the public and private parts of each profile and see if we have access:
 
 ```javascript
-{
-  "rules": {
+firebase.database().ref('uids').once(function(uids) {
+
+  var uids = Object.keys(uids.val());
+  uids.forEach(uid => {
   
-    "userprofiles": {
+    firebase.database().ref('userprofiles/' + uid + "/public").once(publicProfile => {
+      console.log(publicProfile);
+    }, handleAccessDeniedError);
+    
+    firebase.database().ref('userprofiles/' + uid + "/private").once(privateProfile => {
+      console.log(privateProfile);
+    }, handleAccessDeniedError);
+  });
+});
 
-      "$uid": {
-        
-        ".write": "auth.uid == $uid",
-      
-        "public" {
-            ".read": "data.child('public').child('friends').child(auth.uid).exists()",
-        },
-        
-        "private": {
-            ".read": "auth.uid == $uid"
-        }
-      }
-
-    }
-  }
+handleAccessDeniedError(error) {
+  console.error(error.message);
 }
 ```
 
