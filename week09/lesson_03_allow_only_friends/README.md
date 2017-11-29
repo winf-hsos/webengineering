@@ -165,9 +165,12 @@ Instead, if you want to list users that the currently signed in user has access 
 We can then use the following code to iterate through the public and private parts of each profile and see if we have access:
 
 ```javascript
+// Read the list of uids
 firebase.database().ref('uids').once(function(uids) {
 
   var uids = Object.keys(uids.val());
+  
+  // For each uids, try to read the public and the private section
   uids.forEach(uid => {
   
     firebase.database().ref('userprofiles/' + uid + "/public").once(publicProfile => {
@@ -180,6 +183,7 @@ firebase.database().ref('uids').once(function(uids) {
   });
 });
 
+// If access is denied, we get an error
 handleAccessDeniedError(error) {
   console.error(error.message);
 }
