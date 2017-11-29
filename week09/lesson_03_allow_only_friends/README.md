@@ -101,34 +101,7 @@ We have now successfully implemented a good level of security while not restrict
 
 Structuring our database this way allows us to define rules for both part, `public` and `private` separately.
 
-
-```javascript
-{
-  "rules": {
-    "products": {
-      ".read": true,
-      ".write": false
-    }
-    
-    "userprofiles": {
-
-      "$uid": {
-        ".read": "data.child('friends').child(auth.uid).exists()",
-        ".write": "auth.uid == $uid",
-        
-        "dateofbirth": {
-            ".read": "auth.uid == $uid"
-        }
-      }
-    }
-  }
-}
-```
-
-We added a new rule for the child node `dateofbirth` of a user's profile, which states that only the owner may read this property. You can see an important concept of Firebase rules in action here: Rules on a lower level (more specific) overwrite rules on a higher level in the hierarchy. This works great if we only have one or two properties that we want to hide from friends.
-
-If we have more properties, defining a special rule for every field can lead to unreadable and complex rules. In this case, it would be better to split the user profile in two parts, one called `public` and one called `private`, for example. We can then define the access rules for these two nodes only:
-
+The rules for both parts could then look like this:
 
 ```javascript
 {
@@ -152,6 +125,8 @@ If we have more properties, defining a special rule for every field can lead to 
   }
 }
 ```
+
+The public part is accessible for all friends and the user himself, while the private part is accessible only to the user himself.
 
 ## Listing profiles with read permission
 
