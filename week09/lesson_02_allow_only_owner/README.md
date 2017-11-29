@@ -59,3 +59,7 @@ The above in a simple but useful example for a database rule. With Firebase data
 The animation below demonstrates how you can use the example file and upload it to your database.
 
 ![Import JSON to Firebase database](/media/firebase-database-import-json.gif)
+
+## Continue reading
+
+[>> Goto lesson 3 - Allow only the owner and friends to read a profile](../lesson_03_allow_only_friends/)
