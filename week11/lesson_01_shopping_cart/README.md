@@ -35,7 +35,7 @@ In this lesson, I provide you with an example [`json`](database_export.json) fil
 
 This example extends the product list example from week 6. Here, we have already added simple buttons with no functionality to each product in the list. Let's now create that functionality.
 
-In the example, we created the button dynamically for each product. We still do it this way, but we slightly changed how the button (back then it was a `<a>` link element):
+In the example, we created the button dynamically for each product. We still do it this way, but we slightly changed how the button looks like (back then it was actually a `<a>` link element):
 
 `<button onclick="addToCart(this)" class="btn btn-primary addCartBtn" disabled>Buy now</button>`
 
