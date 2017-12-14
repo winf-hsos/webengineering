@@ -1,0 +1,17 @@
+[ {
+  "description" : "Ein Pilsener von Welt.",
+  "name" : "Krombacher Test",
+  "price" : 12.99
+}, {
+  "description" : "Herrliches Herforder",
+  "name" : "Herforder",
+  "price" : 10.99
+}, {
+  "description" : "Heute ein Veltins!",
+  "name" : "Veltins",
+  "price" : 12.99
+}, {
+  "description" : "Kann man auch trinken!",
+  "name" : "Radebacher Pils",
+  "price" : 12.49
+} ]
