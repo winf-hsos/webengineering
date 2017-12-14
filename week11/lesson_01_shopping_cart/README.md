@@ -1,6 +1,6 @@
 ## Implementation of a Shopping Cart
 
-In this quick tutorial, we'll run through the code to see how we need expand our previous products list examples to implement the functionality of a shopping cart. In the following, we'll see how to store a shopping cart for a *signed-in* user. We don't cover the following:
+In this quick tutorial, we'll run through the code of the [index.html](index.html) to see how we need expand our previous products list examples to implement the functionality of a shopping cart. In the following, we'll see how to store a shopping cart for a *signed-in* user. We don't cover the following:
 
 - Allow users to start a shopping cart when they are not signed in (this is possible, but would create more complexity)
 - Clearing the shopping cart (you should be able to add such functionality with what you already know)
