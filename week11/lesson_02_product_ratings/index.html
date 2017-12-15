@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+
+    <!-- Import font awesome for icons -->
+    <script defer src="https://use.fontawesome.com/releases/v5.0.1/js/all.js"></script>
+
+    <style>
+        .product {
+            margin: 32px;
+        }
+
+        .card {
+            width: 100%;
+        }
+
+        .rate {
+            color: gray;
+        }
+
+        .rate .down {
+            color: red;
+        }
+
+        .rate .up {
+            color: green;
+        }
+
+
+        .rate svg {
+            margin: 8px;
+
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <div class="container">
+        <div class="row" id="productList">
+            <!-- Here we will dynamically place the products -->
+        </div>
+    </div>
+
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
+
+    <script src="https://www.gstatic.com/firebasejs/4.6.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/4.6.1/firebase-database.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/4.6.2/firebase-auth.js"></script>
+
+    <script>
+        /* global firebase */
+        // Initialize Firebase
+        // TODO: Replace with your project's customized code snippet
+        var config = {
+            apiKey: "AIzaSyBMjgUu-f8i_HB5R6ZzNoUVcUpK57K0UHY",
+            databaseURL: "https://web-engineering-project.firebaseio.com",
+            authDomain: "web-engineering-project.firebaseapp.com",
+        };
+
+        firebase.initializeApp(config);
+
+        //var email = "erika.mustermann@muster.de";
+        var email = "max.mustermann@muster.de";
+        //var email = "n.meseth@hs-osnabrueck.de";
+        var pwd = "test123";
+
+        firebase.auth().signInWithEmailAndPassword(email, pwd).catch(handleError);
+
+        // Get a reference to the database's welcome text
+        var productsRef = firebase.database().ref('products');
+        refreshProdcutList();
+
+        /* This function bundles all necessary steps to 
+         * refresh the product's information */
+        function refreshProdcutList() {
+            productsRef.once('value').then(value => {
+
+                var products = value.val();
+                var promises = [];
+
+                products.forEach((product, index) => {
+                    promises.push(setupProductDiv(product, index));
+                })
+
+                Promise.all(promises).then((productDivs) => {
+
+                    // Get the div element that contains the products
+                    var listContainer = document.querySelector("#productList");
+
+                    // Remove all old div elements (this is faster than innerHTML = "")
+                    while (listContainer.firstChild) {
+                        listContainer.removeChild(listContainer.firstChild);
+                    }
+
+                    // Loop through all productDivs and append them to the list
+                    productDivs.forEach(productDiv => { listContainer.appendChild(productDiv); });
+                });
+            });
+        }
+
+        /* This function gets the ratings for the current user 
+         * If no user is logged in, it returns null */
+        function getUserRatings() {
+            var user = firebase.auth().currentUser;
+            var userRatingsRef = firebase.database().ref('userratings/' + user.uid);
+            return userRatingsRef.once('value').then(value => {
+                return value.val();
+            });
+        }
+
+        /* This function gets the rating for the product with the given id 
+         * If the rating does not exist, it returns null */
+        function getRatingForProduct(id) {
+            var prodRatingRef = firebase.database().ref("productratings/" + id);
+            return prodRatingRef.once('value').then(value => {
+                return value.val();
+            });
+        }
+
+        /* This function takes care of creating the div element
+         * for a single product. It calls the getUserRatings() and
+         * getRatingsForProduct() functions */
+        function setupProductDiv(productObj, productId) {
+
+            // Create a new div element using JavaScript
+            var newDiv = document.createElement('div');
+            // Add the bootstrap class and our own product class
+            newDiv.className += "col-md product";
+
+            // Add two icons, thump up and down, to allow rating (when logged in)
+            newDiv.setAttribute("data-id", productId);
+
+            return getRatingForProduct(productId).then(ratingForProduct => {
+
+                var thumbsup = 0,
+                    votes = 0;
+
+                if (ratingForProduct !== null) {
+                    thumbsup = ratingForProduct.thumbsup;
+                    votes = ratingForProduct.votes;
+                }
+
+                // Get the user's ratings
+                return getUserRatings().then(userRating => {
+
+                    if (userRating !== null)
+                        var userProductRating = userRating[productId];
+                    var thumbUpSelected = userProductRating === 1 ? " up" : "";
+                    var thumbDownSelected = userProductRating === 0 ? " down" : "";
+
+                    newDiv.innerHTML = '<h4>' + productObj.name + '</h4>' +
+                        '<p>' + productObj.description + '</p>' +
+                        '<p><strong>' + productObj.price + '</strong></p>' +
+                        '<p>' + thumbsup + ' von ' + votes + ' gefällt dieses Bier (' + Math.round(thumbsup / votes * 100) + '%)</p>' +
+                        '<div class="rate">' +
+                        '<i onclick="thumb(this, 1)" class="fas fa-thumbs-up fa-2x' + thumbUpSelected + '"></i>' +
+                        '<i onclick="thumb(this, 0)" class="fas fa-thumbs-down fa-2x' + thumbDownSelected + '"></i>' +
+                        '</div>';
+
+                    return newDiv;
+                })
+            });
+        }
+
+        /* This function is called when a thumb (up or down) icon
+         * is clicked. The function get the information about up or down 
+         * in the rating parameter */
+        function thumb(event, rating) {
+
+            var user = firebase.auth().currentUser;
+            var productId = event.parentElement.parentElement.dataset.id;
+
+            if (user) {
+
+                // Check if the user has previously rated this product
+                var userRatingRef = firebase.database().ref('userratings/' + user.uid + '/' + productId);
+
+                // Get a reference to the product's rating (not user specific)
+                var productRatingRef = firebase.database().ref('productratings/' + productId);
+
+                userRatingRef.once('value', function(userRating) {
+                    var previousRating = userRating.val();
+
+                    // If the user has already voted for this product
+                    if (previousRating !== null) {
+
+                        // Deduct the previous rating from the total
+                        productRatingRef.once('value', function(productRating) {
+
+                            var prodRating = productRating.val();
+
+                            // If the rating entry for this product exists already
+                            // Decuct previous user rating, and add one. Votes stay the same.
+                            if (prodRating) {
+                                var ratingObj = { thumbsup: prodRating.thumbsup - previousRating + rating, votes: prodRating.votes };
+                                productRatingRef.set(ratingObj);
+                                userRatingRef.set(rating);
+                            }
+                            // If not, create a new one (cannot be reached, as user has already voted for this product)
+                            else {
+                                var ratingObj = { thumbsup: rating, votes: 1 };
+                                productRatingRef.set(ratingObj);
+                                userRatingRef.set(rating);
+                            }
+                        });
+
+                    }
+
+                    // No vote for this product from the user so far
+                    else {
+                        productRatingRef.once('value', function(productRating) {
+
+                            var prodRating = productRating.val();
+
+                            // If the rating entry for this product exists already
+                            // Add user rating and vote.
+                            if (prodRating !== null) {
+                                var ratingObj = { thumbsup: prodRating.thumbsup + rating, votes: prodRating.votes + 1 };
+                                productRatingRef.set(ratingObj);
+                                userRatingRef.set(rating);
+                            }
+                            // If not, create a new one (cannot be reached, as user has already voted for this product)
+                            else {
+                                var ratingObj = { thumbsup: rating, votes: 1 };
+                                productRatingRef.set(ratingObj);
+                                userRatingRef.set(rating);
+                            }
+                            
+                        });
+                    }
+
+                    refreshProdcutList();
+                });
+            }
+        }
+
+
+        /* This is called if something goes wrong when logging in or logging out.
+         * For example if the user's password is wrong. */
+        function handleError(error) {
+            console.error(error.code + ": " + error.message);
+        }
+    </script>
+
+</body>
+
+</html>
