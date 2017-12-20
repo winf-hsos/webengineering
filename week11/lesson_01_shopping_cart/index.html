@@ -103,8 +103,7 @@
             productsRef.on('value', refreshProdcutList);
 
 
-            /* This function sets the h1 text to whatever is returned
-             * from the database */
+            /* This function refreshes the product list */
             function refreshProdcutList(value) {
                 var products = value.val();
 
@@ -142,8 +141,8 @@
                     var addToCartButtons = document.getElementsByClassName("addCartBtn");
                     [].forEach.call(addToCartButtons, btn => { btn.setAttribute("disabled", ""); });
                 }
-
             }
+
 
             /* This function is called when the user clicks
              * the login button. */
@@ -156,6 +155,7 @@
                  * and pass the email and password */
                 firebase.auth().signInWithEmailAndPassword(email, password).catch(handleError);
             }
+
 
             /* This function is called when the user clicked the 
              * logout button */
@@ -205,29 +205,39 @@
                 }
             }
 
-            function cartChanged(newCart) {
-                console.log("New cart: " + newCart);
 
+            /* This function is called when the cart in the database
+             * changes. The listener is created when a user signs-in
+             * and is removed when a user signs-out */
+            function cartChanged(newCart) {
+                
                 var cart = newCart.val();
 
-                var itemsList = document.getElementById("itemsList");
-                itemsList.innerHTML = "";
+                if (cart !== null) {
+                    
+                    console.dir(cart);
 
-                var total = 0;
+                    var itemsList = document.getElementById("itemsList");
+                    itemsList.innerHTML = "";
 
-                cart.forEach(
-                    function(item, index) {
-                        var listItemText = item.name + ": " + item.price + " x " + item.quantity + " = " + item.price * item.quantity + " EUR";
-                        var newItem = document.createElement("li");
-                        newItem.innerHTML = listItemText;
-                        itemsList.appendChild(newItem);
-                        total += item.price * item.quantity;
-                    });
+                    var total = 0;
 
-                document.getElementById("total").innerText = total + " EUR";
+                    cart.forEach(
+                        function(item, index) {
+                            var listItemText = item.name + ": " + item.price + " x " + item.quantity + " = " + item.price * item.quantity + " EUR";
+                            var newItem = document.createElement("li");
+                            newItem.innerHTML = listItemText;
+                            itemsList.appendChild(newItem);
+                            total += item.price * item.quantity;
+                        });
+
+                    document.getElementById("total").innerText = total + " EUR";
+                }
             }
 
-            /* This function is called when a "Buy now" button is pressed 
+            /* This function is called when a "Buy now" button is pressed.
+             * It updates the cart by adding the quanity 1. This causes
+             * a change in the database and thus cartChanged() to be called.
              */
             function addToCart(event) {
                 var user = firebase.auth().currentUser;
