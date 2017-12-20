@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+
+    <style>
+        .product {
+            margin: 32px;
+        }
+
+        .card {
+            width: 100%;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <div class="container">
+
+
+        <div class="row" id="productList">
+            <!-- Here we will dynamically place the products -->
+        </div>
+
+        <hr>
+
+        <div class="row">
+            <ul id="productInfoList">
+                <!-- Here we will dysplay the info about a clicked product -->
+            </ul>
+        </div>
+
+        <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
+
+        <script type="text/javascript" src="data.js"></script>
+
+        <script>
+            /* global products */
+            console.dir(products);
+
+            var listContainer = document.getElementById("productList");
+
+            // Loop through each product in the result
+            products.forEach(
+                function(product) {
+
+                    // Create a new div element using JavaScript
+                    var newDiv = document.createElement('div');
+                    // Add the bootstrap class and our own product class
+                    newDiv.className += "col-md product";
+
+                    /* Add necessary data attributes for the shopping cart functionality
+                     * We can later access these attributes from the addToCart function */
+                    newDiv.setAttribute("data-id", product.id);
+                    newDiv.setAttribute("data-name", product.name);
+                    newDiv.setAttribute("data-price", product.price);
+
+                    // Add the name, description and price to the div
+                    newDiv.innerHTML = '<h4>' + product.name + '</h4>' +
+                        '<p><strong>' + product.price + ' €</strong></p>' +
+                        '<button onclick="addToCart(this)" class="btn btn-primary addCartBtn">Buy now</button>';
+
+                    // Add the div to the parent container
+                    listContainer.appendChild(newDiv);
+                });
+
+
+            /* This function is called when a "Buy now" button is pressed */
+            function addToCart(event) {
+
+                var productName = event.parentElement.dataset.name;
+                var productId = event.parentElement.dataset.id;
+                var productPrice = event.parentElement.dataset.price;
+
+                console.log("Buy now was clicked for product >" + productName + "<");
+
+                var productInfoList = document.getElementById("productInfoList");
+                var newListItem = document.createElement("li");
+
+                newListItem.innerHTML = "Someone clicked buy button on product " +
+                    '<strong>' + productName + "</strong>" +
+                    ' (ID: ' + productId + ', price: ' + productPrice + ' €)';
+
+                productInfoList.appendChild(newListItem);
+
+            }
+        </script>
+
+</body>
+
+</html>
