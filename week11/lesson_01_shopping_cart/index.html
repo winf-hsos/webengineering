@@ -47,7 +47,6 @@
 
                 <hr>
             </div>
-
         </div>
 
         <div class="row" id="productList">
@@ -64,8 +63,6 @@
                 <b>Total:&nbsp;</b><span id="total"></span>
 
             </div>
-
-
         </div>
 
         <!-- jQuery first, then Popper.js, then Bootstrap JS -->
@@ -210,29 +207,26 @@
              * changes. The listener is created when a user signs-in
              * and is removed when a user signs-out */
             function cartChanged(newCart) {
-                
+
+                var itemsList = document.getElementById("itemsList");
+                itemsList.innerHTML = "";
+
+                var total = 0;
                 var cart = newCart.val();
 
-                if (cart !== null) {
-                    
-                    console.dir(cart);
+                for (var key in cart) {
 
-                    var itemsList = document.getElementById("itemsList");
-                    itemsList.innerHTML = "";
+                    var item = cart[key];
 
-                    var total = 0;
+                    var listItemText = item.name + ": " + item.price + " x " + item.quantity + " = " + item.price * item.quantity + " EUR";
+                    var newItem = document.createElement("li");
+                    newItem.innerHTML = listItemText;
+                    itemsList.appendChild(newItem);
+                    total += item.price * item.quantity;
 
-                    cart.forEach(
-                        function(item, index) {
-                            var listItemText = item.name + ": " + item.price + " x " + item.quantity + " = " + item.price * item.quantity + " EUR";
-                            var newItem = document.createElement("li");
-                            newItem.innerHTML = listItemText;
-                            itemsList.appendChild(newItem);
-                            total += item.price * item.quantity;
-                        });
-
-                    document.getElementById("total").innerText = total + " EUR";
                 }
+                document.getElementById("total").innerText = total + " EUR";
+
             }
 
             /* This function is called when a "Buy now" button is pressed.

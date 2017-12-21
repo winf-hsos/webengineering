@@ -33,7 +33,6 @@
             color: green;
         }
 
-
         .rate svg {
             margin: 8px;
 
@@ -82,6 +81,7 @@
         var productsRef = firebase.database().ref('products');
         refreshProdcutList();
 
+
         /* This function bundles all necessary steps to 
          * refresh the product's information */
         function refreshProdcutList() {
@@ -110,6 +110,7 @@
             });
         }
 
+
         /* This function gets the ratings for the current user 
          * If no user is logged in, it returns null */
         function getUserRatings() {
@@ -120,6 +121,7 @@
             });
         }
 
+
         /* This function gets the rating for the product with the given id 
          * If the rating does not exist, it returns null */
         function getRatingForProduct(id) {
@@ -128,6 +130,7 @@
                 return value.val();
             });
         }
+
 
         /* This function takes care of creating the div element
          * for a single product. It calls the getUserRatings() and
@@ -173,6 +176,7 @@
                 })
             });
         }
+
 
         /* This function is called when a thumb (up or down) icon
          * is clicked. The function get the information about up or down 
@@ -237,7 +241,7 @@
                                 productRatingRef.set(ratingObj);
                                 userRatingRef.set(rating);
                             }
-                            
+
                         });
                     }
 
