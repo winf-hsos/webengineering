@@ -115,10 +115,17 @@
          * If no user is logged in, it returns null */
         function getUserRatings() {
             var user = firebase.auth().currentUser;
-            var userRatingsRef = firebase.database().ref('userratings/' + user.uid);
-            return userRatingsRef.once('value').then(value => {
-                return value.val();
-            });
+
+            if (user) {
+                var userRatingsRef = firebase.database().ref('userratings/' + user.uid);
+                return userRatingsRef.once('value').then(value => {
+                    return value.val();
+                });
+            }
+
+            else {
+                return Promise.resolve(null);
+            }
         }
 
 
