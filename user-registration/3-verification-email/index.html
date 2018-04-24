@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+</head>
+
+<body>
+    <div class="container">
+
+        <div class="row align-items-center">
+            <div class="col-sm-3"></div>
+            <div class="col align-self-center">
+                <h3 class="text-center">Login</h3>
+                <hr>
+                <div class="form-group">
+                    <label for="inputEmail">Email address</label>
+                    <input type="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="Enter email">
+                    <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+                </div>
+                <div class="form-group">
+                    <label for="inputPassword">Password</label>
+                    <input type="password" class="form-control" id="password" placeholder="Password">
+                </div>
+
+                <!-- When this is clicked, login() is called -->
+                <button id="btnLogin" onclick="login()" class="btn btn-primary">Login</button>
+
+                <hr>
+            </div>
+            <div class="col-sm-3"></div>
+        </div>
+
+        <div class="row align-items-center">
+            <div class="col-sm-3"></div>
+            <div class="col align-self-center">
+                <div class="card">
+                    <div class="card-body" id="cardBody">
+
+                        <!-- These two will be filled dynamically -->
+                        <h5 class="card-title" id="welcomeTitle"></h5>
+                        <p class="card-text" id="welcomeText"></p>
+
+                    </div>
+
+                </div>
+
+                <!-- When this is clicked, logout() is called -->
+                <button id="btnLogout" onclick="logout()" style="margin-top: 16px;" class="btn btn-primary" hidden>Logout</button>
+
+                <!-- When this is clicked, sendVerificationEMail() is called -->
+                <button id="btnVerify" onclick="sendVerificationEMail()" style="margin-top: 16px;" class="btn btn-warning" hidden>Send Verification Email</button>
+
+            </div>
+            <div class="col-sm-3"></div>
+        </div>
+
+    </div>
+    <!-- End of container -->
+
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+    <!-- Load Firebase native API -->
+    <script src="https://www.gstatic.com/firebasejs/4.12.1/firebase.js"></script>
+
+    <!-- Load firebase-tools library -->
+    <script src="https://cdn.jsdelivr.net/gh/winf-hsos/firebase-tools@0.3/src/firebase-tools.js"></script>
+
+    <script>
+        /* global firebase, firebasetools */
+
+        /* Replace with your project's information */
+        var config = {
+            apiKey: "AIzaSyBMjgUu-f8i_HB5R6ZzNoUVcUpK57K0UHY",
+            authDomain: "web-engineering-project.firebaseapp.com",
+        };
+
+        firebasetools.initialize(config);
+        firebasetools.onLoginChanged(loginChanged);
+
+        /* This function is called when the user clicks
+         * the sign-up button. */
+        function login() {
+            firebasetools.login();
+        }
+
+        function loginChanged(user) {
+            
+            // If the user variable is set, a user is logged in
+            if (user) {
+
+                // Disable the login button
+                document.getElementById("btnLogin").setAttribute("disabled", true);
+
+                // Show the logout button
+                document.getElementById("btnLogout").removeAttribute("hidden");
+
+                console.log("Successfully logged in!");
+
+                checkEmailVerified();
+            }
+            
+            // No user logged in
+            else {
+
+                // Enable the login button
+                document.getElementById("btnLogin").removeAttribute("disabled");
+                // Hide the logout button
+                document.getElementById("btnLogout").setAttribute("hidden", "true");
+                // Hide the verifiy button
+                document.getElementById("btnVerify").setAttribute("hidden", "true");
+
+                document.getElementById("welcomeTitle").innerText = "No User Logged in";
+                document.getElementById("welcomeText").innerText = "Please provide your email and password to login."
+            }
+        }
+
+        function checkEmailVerified() {
+
+            // Get the current user
+            var user = firebase.auth().currentUser;
+
+            // Get the info if user if verified
+            var emailVerified = user.emailVerified;
+
+            if (emailVerified === false) {
+                document.getElementById("welcomeTitle").innerText = "Welcome " + user.email;
+                document.getElementById("welcomeText").innerHTML = "Please verify your account by clicking the button below!";
+                document.getElementById("btnVerify").removeAttribute("hidden");
+
+            }
+            
+            else {
+                document.getElementById("welcomeTitle").innerText = "Welcome " + user.email;
+                document.getElementById("welcomeText").innerHTML = "Your account email has been verified!";
+            }
+        }
+
+        function logout() {
+            firebasetools.logout();
+        }
+
+        /* This function is called when a user
+         * clicks on the send verification email button */
+        function sendVerificationEMail() {
+
+            var user = firebase.auth().currentUser;
+
+            user.sendEmailVerification().then(function() {
+                console.log("Verification e-Mail has been sent!")
+            }).catch(handleError);
+
+        }
+
+        /* This is called if something goes wrong when logging in or logging out.
+         * For example if the user's password is wrong. */
+        function handleError(error) {
+            console.error(error.code + ": " + error.message);
+        }
+    </script>
+
+</body>
+
+</html>
