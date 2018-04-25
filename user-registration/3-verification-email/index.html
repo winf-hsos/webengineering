@@ -155,9 +155,7 @@
 
             var user = firebase.auth().currentUser;
 
-            user.sendEmailVerification().then(function() {
-                console.log("Verification e-Mail has been sent!")
-            }).catch(handleError);
+            user.sendEmailVerification().then(emailSuccess).catch(handleError);
 
         }
 
@@ -165,6 +163,10 @@
          * For example if the user's password is wrong. */
         function handleError(error) {
             console.error(error.code + ": " + error.message);
+        }
+        
+        function emailSuccess() {
+            console.log("Verification mail was successfully sent.")
         }
     </script>
 
