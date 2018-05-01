@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+</head>
+
+<body>
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-sm-3"></div>
+            <div class="col align-self-center">
+                <h3 class="text-center">Create a new user</h3>
+                <hr>
+
+                <div class="form-group">
+                    <label for="inputFirstName">First Name</label>
+                    <input type="text" class="form-control" id="inputFirstName" placeholder="Enter your first name">
+                </div>
+
+                <div class="form-group">
+                    <label for="inputLastName">Last Name</label>
+                    <input type="text" class="form-control" id="inputLastName" placeholder="Enter your last name">
+                </div>
+
+                <div class="form-group">
+                    <label for="inputZIPCode">ZIP Code</label>
+                    <input type="text" class="form-control" id="inputZIPCode" placeholder="Enter your ZIP code">
+                </div>
+
+                <div class="form-group">
+                    <label for="inputCity">ZIP Code</label>
+                    <input type="text" class="form-control" id="inputCity" placeholder="Enter your city">
+                </div>
+
+                <div class="form-group">
+                    <label for="inputCustomerType">What are you?</label>
+                    <select class="form-control" id="inputCustomerType">
+                      <option>Vendor</option>
+                      <option>Buyer</option>
+                    </select>
+                </div>
+
+                <div class="form-group form-check">
+                    <input type="checkbox" class="form-check-input" id="inputNewsletter">
+                    <label class="form-check-label" for="inputNewsletter">Yes, I want to receive the newsletter!</label>
+                </div>
+
+                <!-- When this is clicked, register() is called -->
+                <button onclick="createUser()" class="btn btn-primary">Create User</button>
+
+
+                <hr>
+            </div>
+            <div class="col-sm-3"></div>
+        </div>
+    </div>
+    <!-- End of container -->
+
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+    <script src="https://www.gstatic.com/firebasejs/4.13.0/firebase.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/4.13.0/firebase-firestore.js"></script>
+
+
+    <script>
+        /* global firebase */
+
+        /* Replace with your project's information */
+        var config = {
+            projectId: "web-engineering-project",
+            apiKey: "AIzaSyBMjgUu-f8i_HB5R6ZzNoUVcUpK57K0UHY",
+            authDomain: "web-engineering-project.firebaseapp.com",
+        };
+
+        firebase.initializeApp(config);
+
+        /* Required code for using firestore */
+        {
+            var db = firebase.firestore();
+            const settings = { timestampsInSnapshots: true };
+            db.settings(settings);
+        }
+
+        function createUser() {
+
+            /* Get the values from the form elements */
+            var firstName = document.getElementById("inputFirstName").value;
+            var lastName = document.getElementById("inputLastName").value;
+            var zipCode = document.getElementById("inputZIPCode").value;
+            var city = document.getElementById("inputCity").value;
+            var customerType = document.getElementById("inputCustomerType").value;
+            var newsletter = document.getElementById("inputNewsletter").checked;
+
+            /* Create the user object to send to the database */
+            var user = {
+                firstName: firstName,
+                lastName: lastName,
+                zip: zipCode,
+                city: city,
+                type: customerType,
+                newsletter: newsletter
+            };
+
+            /* Print the user object to the console for debugging */
+            console.dir(user);
+
+            /* Add the new user with the add() function */
+            db.collection("users").add(user)
+                .then(function() {
+                    console.log("User successfully created!");
+                })
+                .catch(handleError);
+        }
+
+
+        /* This is called if something goes wrong. */
+        function handleError(error) {
+            console.error(error.code + ": " + error.message);
+        }
+        
+    </script>
+
+</body>
+
+</html>

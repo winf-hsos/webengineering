@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+</head>
+
+<body>
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-sm-3"></div>
+            <div class="col align-self-center text-center">
+                <h3 class="text-center">Query Users</h3>
+                <hr>
+
+                <div class="form-group">
+                    <label for="inputCity">Last Name</label>
+                    <input type="text" class="form-control" id="inputCity" placeholder="Search for user in a city">
+                </div>
+
+                <p>Click the button to read the current users from the database</p>
+                <!-- When this is clicked, register() is called -->
+                <button onclick="queryUsers()" class="btn btn-primary">Get Users</button>
+
+                <hr>
+
+                <!-- This is where the users will be listed -->
+                <p id="infoMessage" class="text-left"></p>
+                <ul id="userList" class="text-left"></ul>
+
+            </div>
+            <div class="col-sm-3"></div>
+        </div>
+    </div>
+    <!-- End of container -->
+
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+    <script src="https://www.gstatic.com/firebasejs/4.13.0/firebase.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/4.13.0/firebase-firestore.js"></script>
+
+
+    <script>
+        /* global firebase */
+
+        /* Replace with your project's information */
+        var config = {
+            projectId: "web-engineering-project",
+            apiKey: "AIzaSyBMjgUu-f8i_HB5R6ZzNoUVcUpK57K0UHY",
+            authDomain: "web-engineering-project.firebaseapp.com",
+        };
+
+        firebase.initializeApp(config);
+
+        /* Required code for using firestore */
+        {
+            var db = firebase.firestore();
+            const settings = { timestampsInSnapshots: true };
+            db.settings(settings);
+        }
+
+        function queryUsers() {
+
+            var city = document.getElementById("inputCity").value;
+            console.log("Querying users from database with city: " + city);
+
+            db.collection("users").where("city", "==", city).get().then(listUsers);
+        }
+
+        function listUsers(userCollection) {
+
+            var infoMessage = document.getElementById("infoMessage");
+            var userList = document.getElementById("userList");
+
+            /* Clear result list */
+            while (userList.firstChild) {
+                userList.removeChild(userList.firstChild);
+            }
+
+            /* Set the info message with number matches found */
+            infoMessage.innerHTML = "Found <b>" + userCollection.size + "</b> matching user(s):";
+
+            /* Create a new list item <li> for each result */
+            userCollection.forEach(function(doc) {
+                var user = document.createElement("li");
+                user.innerHTML = "Vorname: " + doc.data().firstName + ", Nachname: " + doc.data().lastName;
+                userList.appendChild(user);
+            });
+        }
+
+    </script>
+
+</body>
+
+</html>
