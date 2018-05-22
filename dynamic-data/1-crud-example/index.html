@@ -1,0 +1,331 @@
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <title>CRUD Operations for Collection Items</title>
+</head>
+
+<body>
+
+    <div class="container">
+
+        <div class="row" style="margin-top: 32px;">
+            <div class="col">
+                <div class="form-group">
+                    <label for="inputCollectionName">Collection name</label>
+                    <input type="text" class="form-control" id="inputCollectionName" value="products" aria-describedby="collectionNameHelp" placeholder="Enter collection name">
+                    <small id="collectionNameHelp" class="form-text text-muted">Please enter a collection to add, update or delete items.</small>
+                </div>
+                <!-- When this is clicked, updateView() is called -->
+                <button onclick="updateView()" class="btn btn-primary">Update</button>
+            </div>
+        </div>
+
+
+        <div class="row" style="margin-top: 32px;">
+            <div class="col">
+
+                <div class="accordion" id="accordion">
+
+                    <div class="card">
+                        <div class="card-header" id="headingAddItem">
+                            <h5 class="mb-0">
+                                <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseAddItem" aria-expanded="true" aria-controls="collapseAddItem">Add Item</button>
+                            </h5>
+                        </div>
+
+                        <div id="collapseAddItem" class="collapse show" aria-labelledby="headingAddItem">
+                            <div class="card-body">
+
+                                <div class="form-group">
+                                    <label for="inputProductName">Product Name</label>
+                                    <input type="text" class="form-control" id="inputProductName" placeholder="Enter product name">
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="inputProductCategory">Product Category</label>
+                                    <select class="form-control" id="inputProductCategory">
+                                      <option>Beverages</option>
+                                      <option>Fruits</option>
+                                      <option>Vegetables</option>
+                                      <option>Snacks</option>
+                                    </select>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="inputProductPrice">Product Price (EUR)</label>
+                                    <input type="text" class="form-control" id="inputProductPrice" placeholder="Enter product price">
+                                </div>
+
+                                <!-- When this is clicked, saveProduct() is called -->
+                                <button onclick="saveProduct()" class="btn btn-primary">Save</button>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header" id="headingUpdateItem">
+                            <h5 class="mb-0">
+                                <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseUpdateItem" aria-expanded="false" aria-controls="collapseUpdateItem">Update Item</button>
+                            </h5>
+                        </div>
+                        <div id="collapseUpdateItem" class="collapse" aria-labelledby="headingUpdateItem">
+                            <div class="card-body">
+
+                                <div class="form-group">
+                                    <label for="inputSelectItemToUpdate">Item to update</label>
+                                    <select class="form-control" id="inputSelectItemToUpdate" onchange="productDropdownChanged()">
+                                    </select>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="inputUpdateProductName">Product Name</label>
+                                    <input type="text" class="form-control" id="inputUpdateProductName" placeholder="Enter new product name">
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="inputUpdateProductCategory">Product Category</label>
+                                    <select class="form-control" id="inputUpdateProductCategory">
+                                      <option>Beverages</option>
+                                      <option>Fruits</option>
+                                      <option>Vegetables</option>
+                                      <option>Snacks</option>
+                                    </select>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="inputUpdateProductPrice">Product Price (EUR)</label>
+                                    <input type="text" class="form-control" id="inputUpdateProductPrice" placeholder="Enter new product price">
+                                </div>
+
+                                <!-- When this is clicked, updateProduct() is called -->
+                                <button onclick="updateProduct()" class="btn btn-primary">Update</button>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header" id="headingDeleteItem">
+                            <h5 class="mb-0">
+                                <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseDeleteItem" aria-expanded="false" aria-controls="collapseDeleteItem">Delete Item</button>
+                            </h5>
+                        </div>
+                        <div id="collapseDeleteItem" class="collapse" aria-labelledby="headingDeleteItem">
+                            <div class="card-body">
+
+                                <div class="form-group">
+                                    <label for="inputSelectItemToDelete">Item to delete</label>
+                                    <select class="form-control" id="inputSelectItemToDelete" onchange="productDropdownChanged()">
+                                    </select>
+                                </div>
+
+                                <!-- When this is clicked, deleteProduct() is called -->
+                                <button onclick="deleteProduct()" class="btn btn-primary">Delete</button>
+
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header" id="headingShowItems">
+                            <h5 class="mb-0">
+                                <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseShowItems" aria-expanded="false" aria-controls="collapseShowItems">Show Items</button>
+                            </h5>
+                        </div>
+                        <div id="collapseShowItems" class="collapse" aria-labelledby="headingShowItems">
+                            <div class="card-body">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">ID</th>
+                                            <th scope="col">Name</th>
+                                            <th scope="col">Category</th>
+                                            <th scope="col">Price</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="itemTable">
+                                        <!-- Items show up here -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+    <!-- Firebase API -->
+    <script src="https://www.gstatic.com/firebasejs/5.0.3/firebase.js"></script>
+
+    <!-- Firebase Tools for simpler usage -->
+    <script src="https://cdn.jsdelivr.net/gh/winf-hsos/firebase-tools@0.65/src/firebase-tools.js"></script>
+
+    <!-- Local load -->
+    <!--<script src="../../../firebase-tools/src/firebase-tools.js"></script>-->
+
+
+    <script>
+        /* global firebasetools */
+
+        var config = {
+            projectId: "web-engineering-project",
+            apiKey: "AIzaSyBMjgUu-f8i_HB5R6ZzNoUVcUpK57K0UHY",
+            databaseURL: "https://web-engineering-project.firebaseio.com",
+            authDomain: "web-engineering-project.firebaseapp.com",
+        };
+
+        firebasetools.initialize(config);
+
+        // Global variable for collection name
+        var collectionName = document.getElementById("inputCollectionName").value;
+
+        // Global variable to store products
+        var products = [];
+
+        // On load, get all products from the database and updater the view
+        firebasetools.getContentItems(collectionName, updateView);
+
+
+        function saveProduct() {
+
+            var collectionName = document.getElementById("inputCollectionName").value;
+
+            var productName = document.getElementById("inputProductName").value;
+            var productCategory = document.getElementById("inputProductCategory").value;
+            var productPrice = document.getElementById("inputProductPrice").value;
+
+            var product = {
+                name: productName,
+                category: productCategory,
+                price: productPrice
+            }
+
+            firebasetools.addContentItem(collectionName, product, updateView);
+        }
+
+        function updateProduct() {
+            var collectionName = document.getElementById("inputCollectionName").value;
+
+            var productId = document.getElementById("inputSelectItemToUpdate").value;
+            var productName = document.getElementById("inputUpdateProductName").value;
+            var productCategory = document.getElementById("inputUpdateProductCategory").value;
+            var productPrice = document.getElementById("inputUpdateProductPrice").value;
+
+            var product = {
+                name: productName,
+                category: productCategory,
+                price: productPrice
+            }
+
+            firebasetools.updateContentItem(collectionName, productId, product, updateView);
+        }
+
+        function deleteProduct() {
+            var collectionName = document.getElementById("inputCollectionName").value;
+            var productId = document.getElementById("inputSelectItemToDelete").value;
+            firebasetools.removeContentItem(collectionName, productId, updateView);
+        }
+
+        // Central function to update all UI components
+        function updateView() {
+            collectionName = document.getElementById("inputCollectionName").value;
+
+            firebasetools.getContentItems(collectionName).then((updatedProducts) => {
+                products = updatedProducts;
+
+                var dropDownItemsToUpdate = document.getElementById("inputSelectItemToUpdate");
+                var dropDownItemsToDelete = document.getElementById("inputSelectItemToDelete");
+                var itemTable = document.getElementById("itemTable");
+
+                clear(dropDownItemsToUpdate);
+                clear(dropDownItemsToDelete);
+                clear(itemTable);
+
+                updatedProducts.forEach((item) => {
+
+                    // Add item to drop down for update items
+                    var dropDownItem = document.createElement("option");
+                    dropDownItem.innerHTML = item.name;
+                    dropDownItem.setAttribute("value", item.id);
+                    dropDownItemsToUpdate.appendChild(dropDownItem);
+
+                    // Add item to drop down for delete items
+                    dropDownItem = document.createElement("option");
+                    dropDownItem.innerHTML = item.name;
+                    dropDownItem.setAttribute("value", item.id);
+                    dropDownItemsToDelete.appendChild(dropDownItem);
+
+                    // Add item to table
+                    var tableRow = document.createElement("tr");
+
+                    var colId = document.createElement("td");
+                    colId.innerHTML = item.id;
+
+                    var colName = document.createElement("td");
+                    colName.innerHTML = item.name;
+
+                    var colCategory = document.createElement("td");
+                    colCategory.innerHTML = item.category;
+
+                    var colPrice = document.createElement("td");
+                    colPrice.innerHTML = item.price;
+
+                    tableRow.appendChild(colId);
+                    tableRow.appendChild(colName);
+                    tableRow.appendChild(colCategory);
+                    tableRow.appendChild(colPrice);
+                    itemTable.appendChild(tableRow);
+
+                })
+
+                // Intialize the input fields for updates
+                productDropdownChanged();
+            });
+        }
+
+        // Function to update the dropdown and input field values
+        function productDropdownChanged() {
+            if (products.length > 0) {
+                var currentProductToUpdateId = document.getElementById("inputSelectItemToUpdate").value;
+
+                var selectedItem;
+                products.forEach((item) => {
+                    if (item.id == currentProductToUpdateId) {
+                        selectedItem = item;
+                    }
+                });
+
+                document.getElementById("inputUpdateProductName").value = selectedItem.name;
+                document.getElementById("inputUpdateProductCategory").value = selectedItem.category;
+                document.getElementById("inputUpdateProductPrice").value = selectedItem.price;
+
+            }
+        }
+
+        function clear(domElement) {
+            /* Clear table */
+            while (domElement.firstChild) {
+                domElement.removeChild(domElement.firstChild);
+            }
+
+        }
+    </script>
+
+
+</body>

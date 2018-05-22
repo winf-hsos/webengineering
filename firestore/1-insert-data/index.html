@@ -71,9 +71,11 @@
     <script src="https://www.gstatic.com/firebasejs/4.13.0/firebase.js"></script>
     <script src="https://www.gstatic.com/firebasejs/4.13.0/firebase-firestore.js"></script>
 
+    <script src="https://cdn.jsdelivr.net/gh/winf-hsos/firebase-tools@0.4/src/firebase-tools.js"></script>
+
 
     <script>
-        /* global firebase */
+        /* global firebase firebasetools */
 
         /* Replace with your project's information */
         var config = {
@@ -83,13 +85,8 @@
         };
 
         firebase.initializeApp(config);
-
-        /* Required code for using firestore */
-        {
-            var db = firebase.firestore();
-            const settings = { timestampsInSnapshots: true };
-            db.settings(settings);
-        }
+        
+        firebasetools.login("n.meseth@hs-osnabrueck.de", "test123");
 
         /* This function is called when the button is clicked */
         function createUser() {
@@ -114,15 +111,9 @@
 
             /* Print the user object to the console for debugging */
             console.dir(user);
-
-            /* Add the new user with the add() function */
-            db.collection("users").add(user)
-                .then(function() {
-                    console.log("User successfully created!");
-                })
-                .catch(handleError);
+            
+            firebasetools.setUserProfile(user);
         }
-
 
         /* This is called if something goes wrong. */
         function handleError(error) {
