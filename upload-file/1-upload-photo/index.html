@@ -1,0 +1,81 @@
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <title>Upload Photo to Firebase Storage</title>
+</head>
+
+<body>
+    <div class="container">
+        <div class="row" style="margin-top: 32px;">
+            <div class="col">
+                <div class="custom-file">
+                    <input id="inputImage" type="file" accept="image/*" class="custom-file-input" id="customFile">
+                    <label class="custom-file-label" for="customFile">Choose image file</label>
+                </div>
+                <!-- When this is clicked, upload() is called -->
+                <button style="margin-top: 16px;" onclick="upload()" class="btn btn-primary">Upload</button>
+            </div>
+        </div>
+
+        <div class="row" style="margin-top: 32px;">
+            <div class="col">
+                <img class="img-fluid" id="showImage" src="#" hidden>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+    <!-- Firebase API -->
+    <script src="https://www.gstatic.com/firebasejs/5.0.3/firebase.js"></script>
+
+    <!-- Firebase Tools for simpler usage -->
+    <script src="https://cdn.jsdelivr.net/gh/winf-hsos/firebase-tools@0.70/src/firebase-tools.js"></script>
+
+    <!-- Local load -->
+    <!--<script src="../../../firebase-tools/src/firebase-tools.js"></script>-->
+
+    <script>
+        /* global firebasetools firebase */
+        var config = {
+            projectId: "web-engineering-project",
+            apiKey: "AIzaSyBMjgUu-f8i_HB5R6ZzNoUVcUpK57K0UHY",
+            databaseURL: "https://web-engineering-project.firebaseio.com",
+            authDomain: "web-engineering-project.firebaseapp.com",
+            storageBucket: 'gs://web-engineering-project.appspot.com'
+        };
+        
+        firebasetools.initialize(config);
+        firebasetools.onLoginChanged(loginChanged);
+
+        function upload() {
+
+            var imageFile = document.getElementById("inputImage").files[0];
+            firebasetools.uploadUserImage(imageFile, uploadFinished);
+        }
+
+        function uploadFinished(snapshotm, downloadURL) {
+            console.log("File uploaded: " + downloadURL);
+
+            var image = document.getElementById("showImage");
+
+            image.removeAttribute("hidden");
+            image.setAttribute("src", downloadURL);
+        }
+
+        function loginChanged(user) {
+            console.dir(user);
+        }
+    </script>
+
+
+</body>

@@ -10,7 +10,6 @@
 </head>
 
 <body>
-
     <div class="container">
 
         <div class="row" style="margin-top: 32px;">
@@ -24,7 +23,6 @@
                 <button onclick="updateView()" class="btn btn-primary">Update</button>
             </div>
         </div>
-
 
         <div class="row" style="margin-top: 32px;">
             <div class="col">
@@ -182,14 +180,12 @@
 
     <script>
         /* global firebasetools */
-
         var config = {
             projectId: "web-engineering-project",
             apiKey: "AIzaSyBMjgUu-f8i_HB5R6ZzNoUVcUpK57K0UHY",
             databaseURL: "https://web-engineering-project.firebaseio.com",
             authDomain: "web-engineering-project.firebaseapp.com",
         };
-
         firebasetools.initialize(config);
 
         // Global variable for collection name
@@ -200,7 +196,6 @@
 
         // On load, get all products from the database and updater the view
         firebasetools.getContentItems(collectionName, updateView);
-
 
         function saveProduct() {
 
