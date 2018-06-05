@@ -6,7 +6,7 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
-    <title>Upload Photo to Firebase Storage</title>
+    <title>Upload Generic File to Firebase Storage</title>
 </head>
 
 <body>
@@ -14,8 +14,8 @@
         <div class="row" style="margin-top: 32px;">
             <div class="col">
                 <div class="custom-file">
-                    <input id="inputImage" type="file" accept="image/*" class="custom-file-input">
-                    <label class="custom-file-label" for="inputImage">Choose image file</label>
+                    <input id="inputFile" type="file" class="custom-file-input">
+                    <label class="custom-file-label" for="inputFile">Choose file</label>
                 </div>
                 <!-- When this is clicked, upload() is called -->
                 <button style="margin-top: 16px;" onclick="upload()" class="btn btn-primary">Upload</button>
@@ -24,7 +24,7 @@
 
         <div class="row" style="margin-top: 32px;">
             <div class="col">
-                <img class="img-fluid" id="showImage" src="#" hidden>
+                <p id="showUrl" hidden></p>
             </div>
         </div>
 
@@ -39,7 +39,7 @@
     <script src="https://www.gstatic.com/firebasejs/5.0.3/firebase.js"></script>
 
     <!-- Firebase Tools for simpler usage -->
-    <script src="https://cdn.jsdelivr.net/gh/winf-hsos/firebase-tools@0.70/src/firebase-tools.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/winf-hsos/firebase-tools@0.75/src/firebase-tools.js"></script>
 
     <!-- Local load -->
     <!--<script src="../../../firebase-tools/src/firebase-tools.js"></script>-->
@@ -53,23 +53,25 @@
             authDomain: "web-engineering-project.firebaseapp.com",
             storageBucket: 'gs://web-engineering-project.appspot.com'
         };
-        
+
         firebasetools.initialize(config);
         firebasetools.onLoginChanged(loginChanged);
 
         function upload() {
 
-            var imageFile = document.getElementById("inputImage").files[0];
-            firebasetools.uploadUserImage(imageFile, uploadFinished);
+            var file = document.getElementById("inputFile").files[0];
+
+            // Upload the file to a path called 'documents/brochures'
+            firebasetools.uploadFile("documents/brochures", file, uploadFinished);
         }
 
         function uploadFinished(snapshotm, downloadURL) {
             console.log("File uploaded: " + downloadURL);
 
-            var image = document.getElementById("showImage");
+            var urlPlaceholder = document.getElementById("showUrl");
 
-            image.removeAttribute("hidden");
-            image.setAttribute("src", downloadURL);
+            urlPlaceholder.removeAttribute("hidden");
+            urlPlaceholder.innerHTML = 'File uploaded, you can access it at: <a href="' + downloadURL + '">' + downloadURL + '</a>';
         }
 
         function loginChanged(user) {
