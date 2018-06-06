@@ -41,9 +41,6 @@
     <!-- Firebase Tools for simpler usage -->
     <script src="https://cdn.jsdelivr.net/gh/winf-hsos/firebase-tools@0.75/src/firebase-tools.js"></script>
 
-    <!-- Local load -->
-    <!--<script src="../../../firebase-tools/src/firebase-tools.js"></script>-->
-
     <script>
         /* global firebasetools firebase */
         var config = {
@@ -65,13 +62,14 @@
             firebasetools.uploadFile("documents/brochures", file, uploadFinished);
         }
 
-        function uploadFinished(snapshotm, downloadURL) {
+        function uploadFinished(snapshot, downloadURL) {
             console.log("File uploaded: " + downloadURL);
+            console.dir(snapshot.metadata.name);
 
             var urlPlaceholder = document.getElementById("showUrl");
 
             urlPlaceholder.removeAttribute("hidden");
-            urlPlaceholder.innerHTML = 'File uploaded, you can access it at: <a href="' + downloadURL + '">' + downloadURL + '</a>';
+            urlPlaceholder.innerHTML = 'File uploaded: <a href="' + downloadURL + '">' + snapshot.metadata.name + '</a>';
         }
 
         function loginChanged(user) {

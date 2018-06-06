@@ -57,6 +57,7 @@
                 console.log("Geolocation is available");
 
                 navigator.geolocation.getCurrentPosition(function(position) {
+                    console.dir(position);
                     callback(position.coords.latitude, position.coords.longitude);
                 });
             }
@@ -73,7 +74,7 @@
         function updateMap(latitude, longitude) {
             map = new google.maps.Map(document.getElementById('map'), {
                 center: { lat: latitude, lng: longitude },
-                zoom: 14
+                zoom: 12
             });
 
             /* Create a simple marker showing the current location */
@@ -93,10 +94,11 @@
 
             /* Listen to clicks on the marker and open info message */
             marker.addListener('click', function() {
-                infowindow.open(map, marker);
+                markerClicked(customer);
+                //infowindow.open(map, marker);
             });
 
-            addMarkerAtAddress("Am Tannkamp 75c, 49088 Osnabrück")
+            addMarkerAtAddress("Am Tannenkamp 75c, 49088 Osnabrück")
         }
 
         /* Add a marker at a given address as text */
