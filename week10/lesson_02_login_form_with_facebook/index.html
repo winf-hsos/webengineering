@@ -50,6 +50,7 @@
                         <!-- These two will be filled dynamically -->
                         <h5 class="card-title" id="welcomeTitle"></h5>
                         <p class="card-text" id="welcomeText"></p>
+                        <img src="#" id="profilePicture">
 
                     </div>
                 </div>
@@ -105,14 +106,16 @@
         function loginSocial() {
             var provider = new firebase.auth.FacebookAuthProvider();
             provider.addScope('user_likes');
-        
+            provider.addScope('public_profile');
+
 
             firebase.auth().signInWithPopup(provider).then(function(result) {
                 // This gives you a Facebook Access Token. You can use it to access the Facebook API.
                 var token = result.credential.accessToken;
                 // The signed-in user info.
                 var user = result.user;
-                console.dir(result);
+                console.dir(user.providerData[0].photoURL);
+
 
                 FB.api('/me/likes', { access_token: result.credential.accessToken }, function(response) {
                     console.log(response);
@@ -146,6 +149,8 @@
 
             // If the user variable is set, a user is logged in
             if (user) {
+
+                document.getElementById("profilePicture").setAttribute("src", user.providerData[0].photoURL);
 
                 // Disable the login button
                 document.getElementById("btnLogin").setAttribute("disabled", true);

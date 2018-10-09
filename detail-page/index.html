@@ -146,6 +146,7 @@
                                             <th scope="col">Name</th>
                                             <th scope="col">Category</th>
                                             <th scope="col">Price</th>
+                                            <th scope="col">Detail</th>
                                         </tr>
                                     </thead>
                                     <tbody id="itemTable">
@@ -281,10 +282,14 @@
                     var colPrice = document.createElement("td");
                     colPrice.innerHTML = item.price;
 
+                    var colDetailLink = document.createElement("td");
+                    colDetailLink.innerHTML = "<a href=\"detail.html?id=" + item.id + "&collection=" + collectionName + "\">Detail</a>";
+
                     tableRow.appendChild(colId);
                     tableRow.appendChild(colName);
                     tableRow.appendChild(colCategory);
                     tableRow.appendChild(colPrice);
+                    tableRow.appendChild(colDetailLink);
                     itemTable.appendChild(tableRow);
 
                 })

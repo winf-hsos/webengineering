@@ -1,0 +1,88 @@
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <title>Detail Page</title>
+</head>
+
+<body>
+    <div class="container">
+
+        <div class="row" style="margin-top: 32px;">
+            <div id="itemDetail" class="col">
+                <!-- Item details appear here -->
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col">
+                <a href="index.html" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Back</a>
+            </div>
+        </div>
+    </div>
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+    <!-- Firebase API -->
+    <script src="https://www.gstatic.com/firebasejs/5.0.3/firebase.js"></script>
+
+    <!-- Firebase Tools for simpler usage -->
+    <script src="https://cdn.jsdelivr.net/gh/winf-hsos/firebase-tools@0.75/src/firebase-tools.js"></script>
+
+    <!-- Local load -->
+    <!--<script src="../../../firebase-tools/src/firebase-tools.js"></script>-->
+
+
+    <script>
+        /* global firebasetools firebase*/
+        var config = {
+            projectId: "web-engineering-project",
+            apiKey: "AIzaSyBMjgUu-f8i_HB5R6ZzNoUVcUpK57K0UHY",
+            databaseURL: "https://web-engineering-project.firebaseio.com",
+            authDomain: "web-engineering-project.firebaseapp.com",
+        };
+        firebasetools.initialize(config);
+
+        // Global variable for collection name
+        var collectionName = getParameterByName("collection");
+        var id = getParameterByName("id");
+
+        var itemRef = firebase.firestore().collection(collectionName).doc(id);
+
+        itemRef.get().then(function(doc) {
+            if (doc.exists) {
+                console.log("Document data:", doc.data());
+
+                var item = doc.data();
+
+                var detailDiv = document.getElementById("itemDetail");
+                detailDiv.innerHTML = "<ul><li>ID: " + item.id + "</li><li>Name: " + item.name + "</li><li>" + item.price + " EUR</li><ul>";
+            }
+            else {
+                // doc.data() will be undefined in this case
+                console.log("No such document!");
+            }
+        }).catch(function(error) {
+            console.log("Error getting document:", error);
+        });
+
+
+        function getParameterByName(name, url) {
+            if (!url) url = window.location.href;
+            name = name.replace(/[\[\]]/g, "\\$&");
+            var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+                results = regex.exec(url);
+            if (!results) return null;
+            if (!results[2]) return '';
+            return decodeURIComponent(results[2].replace(/\+/g, " "));
+        }
+    </script>
+
+
+</body>
